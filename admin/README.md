@@ -21,7 +21,7 @@ The purpose of these challenges is to learn an under-the-hood understanding of b
 
 5. Inside of `part1.js`, update the DOM (such as the text in your created `div`). 
 
-6. Add an event handler to let the user update our JS dta. 
+6. Add an event handler to let the user update our JS data. 
 
 ### Part 2: 
 
