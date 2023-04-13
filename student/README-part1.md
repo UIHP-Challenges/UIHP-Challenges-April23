@@ -10,7 +10,7 @@ As you've learned in the workshop so far, `html` and `css` are what allows us to
 * Display content (data inside computer/from internet) as the 'view' for users to see, and 
 * Enable the user to interact (tap, click, etc) with the 'view' they see and change it (by changing the udnerlying data & updating the view). 
 
-1. First, let's take a look at the `index.html` file. Open it in the browser. To view the result of your code in the browser, navigate to challenges directory in the terminal - you may have to type in < cd challenges >. Once you're in the `challenges` folder, type in "open index.html". This should automatically open the file in your default web browser. 
+1. First, let's take a look at the `index.html` file. Open it in the browser. To view the result of your code in the browser, navigate to challenges directory in the terminal - you may have to type in `"cd challenges"`. Once you're in the `challenges` folder, type in "open index.html". This should automatically open the file in your default web browser. 
 
 What do you see? Your tab or window should have the title you see in `index.html`, which is "The Hard Parts of UI Development", but the page itself should be totally blank. You can also `inspect` the page and view your `html` code in Chrome DevTools. For more info about how to use Chrome DevTools, check out their [docs](https://developer.chrome.com/docs/devtools/). 
 
@@ -31,9 +31,9 @@ Now what? We can't do anything with that data. Even if we had a button to click,
     - Select the `div` element from the DOM and assign it to a variable called `jsDiv`. 
 
 6. We're able to store the user's input to our JS file - now what? How can we enable the user to interact with the 'view' they see and change it?     
-    - Let's add a function that will "handle" the action of our user adding input to our text box. This way, we can change the underlying data & update the view. Declare a function "handleInput". This function needs to grab the `value` from our `input` box (jsInput?) and then reassign the content of our `div` element (jsDiv?) to contain this value so that we can do something with it later. 
+    - Let's add a function that will "handle" the action of our user adding input to our text box. This way, we can change the underlying data & update the view. Declare a function "handleInput". This function needs to grab the `value` from the `input` node on the DOM and then update the content of our `div` on the DOM to contain this value so that we can do something with it later. 
 
-7. Finally, let's create an `event handler` that will call our `handleInput` function when a user writes something in the `<input>` field. There are several ways to do this, but one such method is the [`oninput`](https://www.w3schools.com/jsref/event_oninput.asp) Event handler. You can invoke this method on our `jsInput` element from the DOM and assign the value of our `handleInput` function (Not sure how much guidance to provide here). 
+7. Finally, let's create an `event handler` that will call our `handleInput` function when a user writes something in the `<input>` field. There are several ways to do this, but one such method is the [`oninput`](https://www.w3schools.com/jsref/event_oninput.asp) Event handler. You can invoke this method on our `jsInput` element from the DOM and assign the value of our `handleInput` function.
 
 We should now have a full User Interface (UI) which addresses our goals:
 * Display content (data inside computer/from internet) as the 'view' for users to see, and 
