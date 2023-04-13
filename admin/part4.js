@@ -14,6 +14,8 @@ Extension - functional components
 /* starting code for this section
 second half (where we left off at end of part 3) commented out */
 
+let myName = '';
+
 const vDOM = [
   [
     'input',
@@ -70,6 +72,8 @@ function convert(node) {
 
 /* first half of "solution" 
 w/ map and spread for list manipulation */
+
+let myName = '';
 
 const vDOM = [
   [
@@ -130,6 +134,8 @@ document.body.append(...elems);
 
 /*slide 36 - what 'student' code should essentially look like at end of part 4 
 first half commented out, edited updateDOM and event handler*/
+
+// let myName = '';
 
 // const vDOM = [
 //   [
