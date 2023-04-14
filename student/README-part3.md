@@ -32,7 +32,9 @@ Now, our view should look the same as it did before, but our code should consist
 
 However, our code is still fairly imperative - just glancing at it,
 
-`Quick Refresher`: In this challenge, we are going to be using `string interpolation`, or template literals, to include `"visual"` code to our application. Imagine we wanted the text content of a div element to be the string "I live in (user's location)!". If we were to do this, we can use the `concat` method to build out our `textContent` line by line:
+something about making our code more visual yet still dynamic/flexible
+
+As an example, let's take a look at `string interpolation`, using template literals. Imagine we wanted the text content of a div element to be the string "I live in (user's location)!". One way we can do this is to use the `concat` method to build out our `textContent` line by line:
 
 ```javascript
 let userLocation = 'LA';
