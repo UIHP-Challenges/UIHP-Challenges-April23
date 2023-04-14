@@ -1,7 +1,6 @@
 let myName = '';
-let jsInput;
-let jsDiv;
 let vDOM;
+let elems;
 
 function createVDOM() {
   return [
@@ -32,5 +31,13 @@ function convert(node) {
   element.oninput = node[2];
   return element;
 }
+
+// function findDiff(prevVDOM, currentVDOM) { 
+//     for (let i = 0; i < currentVDOM.length; i++) {
+//         if(JSON.stringify(prevVDOM[i]) !== JSON.stringify(currentVDOM[i])){
+//             // change the actual DOM element related to that vDOM element!
+//         }
+//     }
+// }
 
 setInterval(updateDOM, 15);

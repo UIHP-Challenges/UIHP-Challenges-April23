@@ -18,6 +18,6 @@ Now we're changing our 'view' based on several different possible user interacti
 
    - Update the content of the div on the DOM to be our current data.
 
-5. Now that the `dataToView` function either converts our JS to be viewed on the DOM or makes the actual updates to the DOM, we need to adjust our event handlers. Instead of updating the data AND updating the DOM elements on the page in each handler, they should only make changes to the underlying data. Remember: Changes to the data should invoke the `dataToView` function so the `view` is always up to date.
+5. Now that the `dataToView` function uses our JS data to update the DOM content, we need to make sure it is invoked after our data changes. What adjustments can we make to our event handlers so that they only make changes to the underlying data, and what should happen as soon as a change is made? 
 
 6. While it may not be efficient, we can have our `dataToView` run so often that nay change to data will instantly propagate using a [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval) function at a rate that is close to the browser refresh rate. Use `setInterval` to implement this. 
