@@ -1,7 +1,7 @@
-let post = "";
+let post = '';
 
-const jsInput = document.querySelector("input");
-const jsDiv = document.querySelector("div");
+const jsInput = document.querySelector('input');
+const jsDiv = document.querySelector('div');
 
 function handleInput() {
   post = jsInput.value;
