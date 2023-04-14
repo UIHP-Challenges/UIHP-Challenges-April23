@@ -34,5 +34,5 @@ setInterval(dataToView, 15);
 //1. At the very beginning of the "updateDOM" function, add this line:
 /* document.activeElement === jsInput ? (isFocus = true) : (isFocus = false); */
 
-//2. At the very end of the "updateDOM" function, ad the following line:
+//2. At the very end of the "updateDOM" function, add the following line:
 /* if (isFocus) jsInput.focus(); */

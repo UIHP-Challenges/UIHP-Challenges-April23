@@ -1,4 +1,4 @@
-### Part 3: Virtual DOM
+### Part 3: The Virtual DOM
 
 
 If you take a look at the `part3.js`, we now have our auto-updating view(from data) from the previous challenge. Right now, we are describing a key part of the UI in `dataToView`: The contents(data) and how to display it. What if we described the elements as well? This would make the `dataToView` convertor a complete description of the data and view.

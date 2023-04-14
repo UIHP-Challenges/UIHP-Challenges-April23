@@ -10,7 +10,7 @@ Part 1 will cover topics including HTML & markup in the web browser, JavaScript 
 
 [add instructions to fork/clone repo or however we're going to do it]
 
-### Part 1:
+### Part 1: Building an Interactive UI
 
 In UI Engineering we have **2 simple goals**:
 
