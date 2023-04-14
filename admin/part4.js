@@ -160,9 +160,8 @@ first half commented out, edited updateDOM and event handler*/
 // document.body.append(...elems);
 
 let myName = '';
-let jsInput;
-let jsDiv;
 let vDOM;
+let elems;
 
 function createVDOM() {
   return [
