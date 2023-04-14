@@ -28,7 +28,7 @@ What do you see? Your tab or window should show the text you see inside the `<ti
 
 4. Uncomment the line containing the `stylesheet` in `index.html` to add some pizazz to our page - remember, when this loads, it will populate the [CSSOM](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model), similar to how our HTML populates the DOM with elements to render.
 
-Now what? Even if we can change the data on the DOM, we can't do anything with that data or access it directly. Even if we had a button to click, we would still need some kind of logic to make something happen in the event that it is clicked. Our `html` is only being loaded once and we can't run any code in the DOM. Therefore, we need JavaScript to create, save, and update data.
+Now what? Even if we can change the data on the DOM, we can't do anything with that data or access it directly. We would still need some kind of logic to make something happen in the event that a user types in our input or a button is clicked. Our `html` is only being loaded once and we can't run any code in the DOM. Therefore, we need JavaScript to create, save, and update data.
 
 5. Uncomment the `<script>` tag in `index.html`. This script acts as a link between the `html` and the code in the linked JavaScript file. When our `script` loads with our HTML in the browser, the JavaScript engine will start running and allow us to run our JS code in the browser directly (and access everything else we get with the JS runtime, including `memory` to store data).
 
@@ -42,15 +42,13 @@ If you're unfamiliar with DOM manipulation, take a look at the [docs](https://de
 
 8. Let's use our JS data to update the DOM data. Our `jsDiv` object will have some "getter/setter" property-methods, including [textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent). Set the `jsDiv.textContent` to be the value of our `post` variable. Refresh the page in the browser, and you should see that string as the text in the `div`.
 
----
+9. Now let's update our JavaScript data based on our user interactions. First, edit your variable declaration for `post` at the top of the file to initialize it to an empty string instead.
 
-\*\*\*edits to do below this line
+   Declare a function `handleInput` that will "handle" what we want to do with what the user types in the input. Use the `value` getter/setter method available on our `jsInput` object. When the user types into the `input`, reassign `post` to hold that text.
 
-edit post declaration to be empty string and delete setting textcontent on jsdiv
+   Set the `textContent` on the `div` to to be the value of `post` here in `handleInput` instead.
 
-9. When the user types into the `input`, let's update our `post` variable to hold that text. Declare a function `handleInput` that will "handle" that user action/event. This way, we can change the underlying data & update the view. This function needs to grab the `value` from our `input` box (jsInput?) and then reassign the content of our `div` element (jsDiv?) to contain this value so that we can do something with it later.
-
-10. Finally, let's create an `event handler` that will run our `handleInput` function as a callback in the event that a user writes something in the `<input>` field. There are several ways to do this, but one such method is the [`oninput`](https://www.w3schools.com/jsref/event_oninput.asp) Event handler. You can invoke this method on our `jsInput` element from the DOM and assign the value of our `handleInput` function (Not sure how much guidance to provide here).
+10. Finally, let's create an `event handler` that will run our `handleInput` function in the event that a user types in `input`. There are several ways to do this, but one is the [`oninput`](https://www.w3schools.com/jsref/event_oninput.asp) property on the `jsInput` object. Us this to set `handleInput` on our input DOM element as a callback.
 
 We should now have a full User Interface (UI) which addresses our two main goals:
 
