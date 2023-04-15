@@ -1,6 +1,4 @@
-### Part 3: The Virtual DOM
-
----
+## Part 3: The Virtual DOM
 
 In our first two UI Hard Parts challenges, we displayed content and let our users interact with it to change the underlying data, and implemented one-way data binding to ensure our view is always dependent on and consistent with that data.
 

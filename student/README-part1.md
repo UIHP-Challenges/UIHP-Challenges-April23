@@ -10,7 +10,7 @@ Part 1 will cover topics including HTML & markup in the web browser, JavaScript 
 
 Download this [zip folder]() containing all of the files you'll need for these challenges. 
 
-### Part 1: Building an Interactive UI
+## Part 1: Building an Interactive UI
 
 In UI Engineering we have **2 simple goals**:
 

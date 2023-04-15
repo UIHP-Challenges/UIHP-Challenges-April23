@@ -30,11 +30,12 @@ What do you see? Your tab or window should show the text you see inside the `<ti
 
 4. Uncomment the line containing the `stylesheet` in `index.html` to add some pizazz to our page - remember, when this loads, it will populate the [CSSOM](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model), similar to how our HTML populates the DOM with elements to render.
 
-Now what? Even if we can change the data on the DOM, we can't do anything with that data or access it directly. Even if we had a button to click, we would still need some kind of logic to make something happen in the event that it is clicked. Our `html` is only being loaded once and we can't run any code in the DOM. Therefore, we need JavaScript to create, save, and update data.
+Now what? Even if we can change the data on the DOM, we can't do anything with that data or access it directly. We would still need some kind of logic to make something happen in the event that a user types in our input or a button is clicked. Our `html` is only being loaded once and we can't run any code in the DOM. Therefore, we need JavaScript to create, save, and update data.
 
 5. Uncomment the `<script>` tag in `index.html`. This script acts as a link between the `html` and the code in the linked JavaScript file. When our `script` loads with our HTML in the browser, the JavaScript engine will start running and allow us to run our JS code in the browser directly (and access everything else we get with the JS runtime, including `memory` to store data).
 
-   In our JavaScript runtime, we have access to some very useful APIs, including [document](https://developer.mozilla.org/en-US/docs/Web/API/Document). In `part1.js`, if you `console.log(document)`, you will see an object in the browser dev tools console. This `document` object also has a hidden property that acts as a link to the DOM.
+        **Extension Challenge: Document Object** 
+        - In our JavaScript runtime, we have access to some very useful APIs, including [document](https://developer.mozilla.org/en-US/docs/Web/API/Document). In `part1.js`, if you `console.log(document)`, you will see an object in the browser dev tools console. This `document` object also has a hidden property that acts as a link to the DOM.
 
 6. In `part1.js`, declare a variable `post` and initialize it to a string that is your name. Congrats - we have data! Now, how can we use it to update the DOM and what we see in our view?
 
@@ -44,15 +45,13 @@ If you're unfamiliar with DOM manipulation, take a look at the [docs](https://de
 
 8. Let's use our JS data to update the DOM data. Our `jsDiv` object will have some "getter/setter" property-methods, including [textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent). Set the `jsDiv.textContent` to be the value of our `post` variable. Refresh the page in the browser, and you should see that string as the text in the `div`.
 
----
+9. Now let's update our JavaScript data based on our user interactions. First, edit your variable declaration for `post` at the top of the file to initialize it to an empty string instead.
 
-\*\*\*edits to do below this line
+   Declare a function `handleInput` that will "handle" what we want to do with what the user types in the input. Use the `value` getter/setter method available on our `jsInput` object. When the user types into the `input`, reassign `post` to hold that text.
 
-edit post declaration to be empty string and delete setting textcontent on jsdiv
+   Set the `textContent` on the `div` to to be the value of `post` here in `handleInput` instead.
 
-9. When the user types into the `input`, let's update our `post` variable to hold that text. Declare a function `handleInput` that will "handle" that user action/event. This way, we can change the underlying data & update the view. This function needs to grab the `value` from our `input` box (jsInput?) and then reassign the content of our `div` element (jsDiv?) to contain this value so that we can do something with it later.
-
-10. Finally, let's create an `event handler` that will run our `handleInput` function as a callback in the event that a user writes something in the `<input>` field. There are several ways to do this, but one such method is the [`oninput`](https://www.w3schools.com/jsref/event_oninput.asp) Event handler. You can invoke this method on our `jsInput` element from the DOM and assign the value of our `handleInput` function (Not sure how much guidance to provide here).
+10. Finally, let's create an `event handler` that will run our `handleInput` function in the event that a user types in `input`. There are several ways to do this, but one is the [`oninput`](https://www.w3schools.com/jsref/event_oninput.asp) property on the `jsInput` object. Us this to set `handleInput` on our input DOM element as a callback.
 
 We should now have a full User Interface (UI) which addresses our two main goals:
 
@@ -87,94 +86,87 @@ Now we're changing our 'view' based on several different possible user interacti
 
 - - - 
 
-### Part 3: The Virtual DOM
+## Part 3: The Virtual DOM
 
+In our first two UI Hard Parts challenges, we displayed content and let our users interact with it to change the underlying data, and implemented one-way data binding to ensure our view is always dependent on and consistent with that data.
 
-If you take a look at the `part3.js`, we now have our auto-updating view(from data) from the previous challenge. Right now, we are describing a key part of the UI in `dataToView`: The contents(data) and how to display it. What if we described the elements as well? This would make the `dataToView` convertor a complete description of the data and view.
+In `part3.js`, we are describing key parts of the UI in `dataToView`: the contents (data) and how to display it. What if we described the elements as well? This would make our funnction a complete description of the data _and_ view.
 
+1. In `index.html`, edit the `script` tag to use `part3.js` as the `src` file. Then comment out or delete the `input` and `div` elements.
 
-1. To do this, let's first start by removing our `input` and `div` elements in our HTML file, since we are going to be creating and displaying our elements in the JavaScript file.
+Instead, let's create our DOM elements with JavaScript. A `UI Component` is a function that fully creates elements and relates their data to the view.
 
+2. In `part3.js`, uncomment the function `'component'` and build it out. You will see it has already been started for you.
 
-2. We will now declare a function `component`. We are going to be essentially combining everything into one function(`component`) that creates elements & relates data and view, which we call an `UI Component`, hence the function name. This will essentially replace the `dataToView` convertor, so also make adjust the setInterval method accordingly.
+   - The first and last lines of code in this function are there to make sure that once your user has clicked in the input, they will stay "clicked" and able to type as `component` is repeatedly called (hint!) to auto-update the DOM.
 
+   This function will combine all of our previous functionality into one:
 
-  1. Inside of `component`, let's start with reassigning the data variables we declared globally to be elements using `createElement`.(Note: when moved logic from dataToView, comment out when added to component) We will also no longer need to be selecting these elements because we are creating them here. If you are not familiar with the `createElement` method, first take a look at the docs: https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement
+   - [Creating](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement) DOM elements (instead of selecting them).
+     - Feel free to keep the `jsInput` and `jsDiv` variable declarations at the top of the file, but unitialized - you will reassign the values to be the new objects you create.
+   - Setting their contents based on our JS data.
+   - Creating and attaching event handlers to them.
+   - Displaying our new DOM elements in the view.
 
+   In order to achieve this last step, we need to attach or `append` them to the body of the DOM. There a a couple of ways to do this, but to make sure we are replacing our nodes with an updated version when our data changes (instead of accidentally attaching multiple copies of our input or div), use [replaceChildren](https://developer.mozilla.org/en-US/docs/Web/API/Document/replaceChildren).
 
-  2. We are also going to want to move our `handleInput` function to be inside `component` because we will also be adding `handleInput` to the `jsInput` element in `component` as well. Remember, this UI component will be tying data to view and handling how users change data.
+Now, our view should look the same as it did before, but our code should consist of 3 parts - our declared variables at the top of the file, the `convert` function (where all of our functionality will be now), and `setInterval`.
 
+---
 
-  3. Now that our elements are made, we can now set the value of `jsInput`, along with the text content of `jsDiv` to be our `post` data.
+\*\*edits to do below this line
 
+However, our code is still fairly imperative - just glancing at it,
 
-  4. Load up our HTML file in the browser. You can see that our elements are not showing up on the DOM. This is because we have not yet appended our elements to the document. We can do this by replacing all of the existing children of our parent element, which in this case is `document.body`(body of DOM), with our newly created elements, `jsInput` and `jsDiv` using `replaceChildren`. For reference, here is the documentation for the `replaceChildren` method: https://developer.mozilla.org/en-US/docs/Web/API/Document/replaceChildren
+something about making our code more visual yet still dynamic/flexible
 
+As an example, let's take a look at `string interpolation`, using template literals. Imagine we wanted the text content of a div element to be the string "I live in (user's location)!". One way we can do this is to use the `concat` method to build out our `textContent` line by line:
 
-3. Now, we should be able to see our component on the screen! We will now shift over to making our Virtual DOM in JavaScript. To do this, we are going to have to tweak our code a bit. Before continuing, change the label for the `post` variable to be `userName`. Now, let's start by declaring the global variable `vDOM` that we will be building out later, and our `createVDOM` function. `createVDOM` is going to be returning an array with all of the details of our elements, which themselves will be arrays. We will have two arrays:
+```javascript
+let userLocation = 'LA';
 
+let textToDisplay = 'I live in ';
+textToDisplay = textToDisplay.concat(userLocation);
+textToDisplay = textToDisplay.concat('!');
+```
 
-  1. The first array in the returned array from `createVDOM` will have 3 elements, `"input"`, `userName`, and a function `handle` that assigns `userName` to the value of `jsInput` (`handle` in this case replaces the `handleInput` event handler). This array will contain the details for `jsInput` down the line.
+Remember, the closer we get our code to mirror what it's actual visual/graphic output looks like, the easier it is for us as developers. So, to make this code look more `"visual"`, we can use a template literal with backticks:
 
+```javascript
+textToDisplay = `I live in ${userLocation}!`;
+```
 
-  `Quick Refresher`: In this challenge, we are going to be using `string interpolation`, or template literals, to include `"visual"` code to our application. Imagine we wanted the text content of a div element to be the string "I live in (user's location)!". If we were to do this, we can use the `concat` method to build out our `textContent` line by line:
+As we can see, this looks a lot more semantic. Now, we can something similar here creating visual elements.
 
+Now, we should be able to see our component on the screen! We will now shift over to making our Virtual DOM in JavaScript. To do this, we are going to have to tweak our code a bit. Now, let's start by declaring the global variable `vDOM` that we will be building out later, and our `createVDOM` function. `createVDOM` is going to be returning an array with all of the details of our elements, which themselves will be arrays. We will have two arrays:
 
-  ```javascript
-  let userLocation = "LA";
+4. The first array in the returned array from `createVDOM` will have 3 elements, `"input"`, `userName`, and a function `handle` that assigns `userName` to the value of `jsInput` (`handle` in this case replaces the `handleInput` event handler). This array will contain the details for `jsInput` down the line.
 
+5. The second array is only going to have 2 elements, `"div"` and the template literal `Hello, ${userName}!`. This will of course be the details for `jsDiv`.
 
-  let textToDisplay = "I live in ";
-  textToDisplay = textToDisplay.concat(userLocation);
-  textToDisplay = textToDisplay.concat("!");
-  ```
+6. We are now going to want to create a function that converts our pieces of `view` in the virtual DOM to elements. Declare a function `convert` that has one parameter, `node`(array of details). `convert` should:
 
+7. Declare a constant `element` that is initialized to a new element by passing the first element) in `node` as an argument to `createElement`.
 
-  Remember, the closer we get our code to mirror what it's actual visual/graphic output looks like, the easier it is for us as developers. So, to make this code look more `"visual"`, we can use a template literal with backticks:
+8. Assign both the `textContent` and `value` properties on `element` to be the second element in `node`.
 
+9. Assign the `oninput` property on `element` to be the third element in `node`.
 
-  ```javascript
-  textToDisplay = `I live in ${userLocation}!`;
-  ```
+10. Finally, return `element`.
 
+11. At this point, we have a function that returns an array details for our elements, `createVDOM`, and a function that converts those details into actual elements, `convert`. So, now we just need a function that actually updates.
 
-  As we can see, this looks a lot more semantic. Now, we can something similar here creating visual elements.
+Declare the function `updateDOM` that will now act as our convertor. `updateDOM` will: (\*make sure updateDOM has focus code instead now)
 
+9. Update our `vDOM` variable to be the returned result of invoking `createDOM()`. `vDOM` will now contain the details we need to make our elements.
 
-  2. The second array is only going to have 2 elements, `"div"` and the template literal `Hello, ${userName}!`. This will of course be the details for `jsDiv`.
+10. Update `jsInput` to be the returned result of the invoking `convert`, passing the first element in `vDOM`(details array for input element) as an argument.
 
+11. Update `jsDiv` to be the returned result of invoking `convert`, passing the second element in `vDOM`(details array for div element) as an argument.
 
-4. We are now going to want to create a function that converts our pieces of `view` in the virtual DOM to elements. Declare a function `convert` that has one parameter, `node`(array of details). `convert` should:
+12. We now have our elements created, but we need to append them to the dom using `replaceChildren`, passing in `jsInput` and `jsDiv` as arguments on the `body` property on the `document` object.
 
-
-  1. Declare a constant `element` that is initialized to a new element by passing the first element) in `node` as an argument to `createElement`.
-
-
-  2. Assign both the `textContent` and `value` properties on `element` to be the second element in `node`.
-
-
-  3. Assign the `oninput` property on `element` to be the third element in `node`.
-
-
-  4. Finally, return `element`.
-
-
-5. At this point, we have a function that returns an array details for our elements, `createVDOM`, and a function that converts those details into actual elements, `convert`. So, now we just need a function that actually updates. Declare the function `updateDOM` that will now act as our convertor. `updateDOM` will:
-
-
-  1. Update our `vDOM` variable to be the returned result of invoking `createDOM()`. `vDOM` will now contain the details we need to make our elements.
-
-
-  2. Update `jsInput` to be the returned result of the invoking `convert`, passing the first element in `vDOM`(details array for input element) as an argument.
-
-
-  3. Update `jsDiv` to be the returned result of invoking `convert`, passing the second element in `vDOM`(details array for div element) as an argument.
-
-
-  4. We now have our elements created, but we need to append them to the dom using `replaceChildren`, passing in `jsInput` and `jsDiv` as arguments on the `body` property on the `document` object.
-
-
-6. The final change we need to make is with out `setInterval` method. Since `updateDOM` is now the function that updates the DOM, that is the function that needs to be passed into `setInterval`.
+13. The final change we need to make is with out `setInterval` method. Since `updateDOM` is now the function that updates the DOM, that is the function that needs to be passed into `setInterval`.
 
 - - -
 
@@ -210,7 +202,7 @@ We're getting semi-visual coding - yay!
 
 - - -
 
-## Part 5: Hooks & Diffing: How we can give our elements additional functionality. 
+## Part 5: Hooks & Diffing
 
 Now that we've learned to build a declarative UI using semi-visual coding and we've also created 'element-flexible' code to 'compose' our logic, let's augment our VDOM elements to include additional functionality. 
 

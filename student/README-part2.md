@@ -1,4 +1,4 @@
-### Part 2: One-way Data Binding 
+## Part 2: One-way Data Binding 
 
 Now that we have a simple application our users can interact with, how can we make our UI more sophisticated? One thing we can do is implement one-way data binding, a popular paradigm for tackling the essential engineering challenge of keeping data and the 'view' consistent. With one-way data binding, users are automatically updated when the source (provider) data changes, but not the other way around. 
 
