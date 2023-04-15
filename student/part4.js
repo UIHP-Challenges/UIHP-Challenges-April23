@@ -1,14 +1,14 @@
-let myName = '';
+let myName = "";
 
 const vDOM = [
   [
-    'input',
+    "input",
     myName,
     function handle() {
       myName = jsInput.value;
     },
   ],
-  ['div', `Hello, ${myName}!`],
+  ["div", `Hello, ${myName}!`],
 ];
 
 function convert(node) {
@@ -21,6 +21,8 @@ function convert(node) {
 
 /** Step @todo */
 /* uncomment the code below this line, and comment out the code above*/
+
+// let isFocus = false
 
 // let myName = '';
 // let jsInput;
@@ -41,10 +43,12 @@ function convert(node) {
 // }
 
 // function updateDOM() {
+//   document.activeElement === jsInput ? (isFocus = true) : (isFocus = false);
 //   vDOM = createVDOM();
 //   jsInput = convert(vDOM[0]);
 //   jsDiv = convert(vDOM[1]);
 //   document.body.replaceChildren(jsInput, jsDiv);
+//   if(isFocus) jsInput.focus()
 // }
 
 // function convert(node) {
