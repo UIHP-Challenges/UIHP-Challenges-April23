@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+## Part 5: Hooks & Diffing
+=======
 ## Part 5: Hooks & Diffing: How we can give our elements additional functionality.
+>>>>>>> dev
 
 Now that we've learned to build a declarative UI using semi-visual coding and we've also created 'element-flexible' code to 'compose' our logic, let's augment our vDOM elements to include additional functionality.
 
@@ -32,7 +36,12 @@ Perhaps we can lock down `myName` so that we it cannot be accessed directly. Bet
 
 12. Lastly, rather than passing in `myName` into the string literal in the `createVDOM` function, what could we pass in instead based on the previous steps?
 
-**Extension Challenge: requestAnimationFrame** - We can switch to running `requestAnimationFrame` rather than `updateDom` directly on data change - so that it never prioritizes over animations (CSS etc). (Add directions here).
+---
+
+***Extension Challenge: requestAnimationFrame()*** <br/>
+*Implement [`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) rather than `updateDom` directly on data change - so that it never prioritizes over animations (CSS etc).*
+
+---
 
 How can we refactor our code make it more efficient but still allow for automatic updates upon changes made to the data? We can write an 'algorithm', or a series of smart instructures, to check what elements actually **differ** - and only change the DOM elements that need to be updated.
 

@@ -1,5 +1,3 @@
-/* Part 4 */
-
 let myName = '';
 
 const vDOM = [

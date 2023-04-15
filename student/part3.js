@@ -1,5 +1,3 @@
-//Part 3
-
 let myName = '';
 let isFocus = false;
 
