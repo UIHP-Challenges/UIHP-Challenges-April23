@@ -6,19 +6,14 @@ The purpose of these challenges is to learn an under-the-hood understanding of b
 
 Part 1 will cover topics including HTML & markup in the web browser, JavaScript & the DOM API, and data-binding in UI development.
 
-## How do I get started?
-
-Download this [zip folder]() containing all of the files you'll need for these challenges. 
-
 - - -
 
 ## Part 1: Building an Interactive UI
 
-In UI Engineering we have **2 simple goals**:
+**In UI Engineering we have **2 simple goal**:
 
-    1) Display content (data) for users to see.
-
-    2) Enable our users to interact with the content they see, and then change it.
+- Display content (data) for users to see.
+- Enable our users to interact with the content they see, and then change it.
 
 1. First, let's take a look at the `index.html` file. Open it in the browser - to do this, in your terminal, make sure you have navigated to this directory, and run the command `open index.html`. This should automatically open the file in your default web browser.
 
@@ -268,7 +263,7 @@ So, let's write a diffing algorithm! You're provided with the first half of this
 
 15. Let's also implement some logic for differentiating between the `prevVDOM` and `vDOM`. Declare a variable prevDom at the top of the file.
 
-16. Inside of your `updateDOM` function, assign the value of `prevVDOM` to an array with the `vDOM` elements _spread_ into the array. Then, check to see if `elems` is _strictly equal to_ `undefined`. If it is, move your `elems = vDOM.map(convert) line inside of the conditional. Otherwise (else), we can invoke our `findDiff`function with`prevVDOM`and`vDOM` passed in.
+16. Inside of your `updateDOM` function, assign the value of `prevVDOM` to an array with the `vDOM` elements _spread_ into the array. Then, check to see if `elems` is _strictly equal to_ `undefined`. If it is, move your `elems = vDOM.map(convert)` line inside of the conditional. Otherwise (else), we can invoke our `findDiff` function with `prevVDOM` and `vDOM` passed in.
 
 17. Finally, let's call our `updateDOM` function with `setInterval` again. (Include explanation as to why we do this).
 
