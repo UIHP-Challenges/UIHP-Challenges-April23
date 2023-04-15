@@ -19,22 +19,17 @@ Instead, let's create our DOM elements with JavaScript. A `UI Component` is a fu
    - [Creating](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement) DOM elements (instead of selecting them).
      - Feel free to keep the `jsInput` and `jsDiv` variable declarations at the top of the file, but unitialized - you will reassign the values to be the new objects you create.
    - Setting their contents based on our JS data.
+     - Once this happens inside `component`, we should no longer need our `dataToView` function.
    - Creating and attaching event handlers to them.
    - Displaying our new DOM elements in the view.
 
    In order to achieve this last step, we need to attach or `append` them to the body of the DOM. There a a couple of ways to do this, but to make sure we are replacing our nodes with an updated version when our data changes (instead of accidentally attaching multiple copies of our input or div), use [replaceChildren](https://developer.mozilla.org/en-US/docs/Web/API/Document/replaceChildren).
 
-Now, our view should look the same as it did before, but our code should consist of 3 parts - our declared variables at the top of the file, the `convert` function (where all of our functionality will be now), and `setInterval`.
+Now, our view should look the same as it did before, but our code should consist of 3 parts - our declared variables at the top of the file, the `component` function (where all of our functionality will be now), and `setInterval`.
 
----
+However, our code is still fairly imperative - just glancing at it, it's hard to tell what our view will look like. The more "visual" our code is (like HTML), the easier it is for us to work with as developers.
 
-\*\*edits to do below this line
-
-However, our code is still fairly imperative - just glancing at it,
-
-something about making our code more visual yet still dynamic/flexible
-
-As an example, let's take a look at `string interpolation`, using template literals. Imagine we wanted the text content of a div element to be the string "I live in (user's location)!". One way we can do this is to use the `concat` method to build out our `textContent` line by line:
+For example - imagine we wanted the text content of a div element to be the string "I live in (user's location)!". We can use the `concat` method to build out our string piece by piece:
 
 ```javascript
 let userLocation = 'LA';
@@ -44,40 +39,54 @@ textToDisplay = textToDisplay.concat(userLocation);
 textToDisplay = textToDisplay.concat('!');
 ```
 
-Remember, the closer we get our code to mirror what it's actual visual/graphic output looks like, the easier it is for us as developers. So, to make this code look more `"visual"`, we can use a template literal with backticks:
+However, this is not very visual or declarative. So instead, we can use a `template literal` with `string interpolation`:
 
 ```javascript
 textToDisplay = `I live in ${userLocation}!`;
 ```
 
-As we can see, this looks a lot more semantic. Now, we can something similar here creating visual elements.
+As we can see, this mirrors what our visual/graphic output will be. Could we do something similar with our main code creating visual elements?
 
-Now, we should be able to see our component on the screen! We will now shift over to making our Virtual DOM in JavaScript. To do this, we are going to have to tweak our code a bit. Now, let's start by declaring the global variable `vDOM` that we will be building out later, and our `createVDOM` function. `createVDOM` is going to be returning an array with all of the details of our elements, which themselves will be arrays. We will have two arrays:
+Let's start with a "unit of code" representing each piece of our view.
 
-4. The first array in the returned array from `createVDOM` will have 3 elements, `"input"`, `userName`, and a function `handle` that assigns `userName` to the value of `jsInput` (`handle` in this case replaces the `handleInput` event handler). This array will contain the details for `jsInput` down the line.
+```javascript
+const divInfo = ['div', `Hi, ${myName}!`];
+```
 
-5. The second array is only going to have 2 elements, `"div"` and the template literal `Hello, ${userName}!`. This will of course be the details for `jsDiv`.
+In this example, our `divInfo` is an array with the details of a DOM element - just by looking at our code, we can tell what it will look like (the type (div) and the text that will display inside).
 
-6. We are now going to want to create a function that converts our pieces of `view` in the virtual DOM to elements. Declare a function `convert` that has one parameter, `node`(array of details). `convert` should:
+3. In `part3.js`, write a function `'convert'` that will take in a `node` (an array of details like our 'divInfo' example above). This function should use that array to create a new DOM element and set its content, and return its linked JavaScript object.
 
-7. Declare a constant `element` that is initialized to a new element by passing the first element) in `node` as an argument to `createElement`.
+   With this function, we can now produce DOM elements from any list of info that visually mirrors what we will see in our view.
 
-8. Assign both the `textContent` and `value` properties on `element` to be the second element in `node`.
+Next, let's create our `virtual DOM` - blocks of code (or a _list_) representing each piece of our view.
 
-9. Assign the `oninput` property on `element` to be the third element in `node`.
+4. Declare a global variable `'vDOM'` but do not initialize it.
 
-10. Finally, return `element`.
+5. Write a function `'createVDOM'` that returns a list (array) containing the following two sub-arrays:
 
-11. At this point, we have a function that returns an array details for our elements, `createVDOM`, and a function that converts those details into actual elements, `convert`. So, now we just need a function that actually updates.
+```javascript
+[
+  'input',
+  myName,
+  function handle() {
+    myName = jsInput.value;
+  },
+][('div', `Hello, ${myName}!`)];
+```
 
-Declare the function `updateDOM` that will now act as our convertor. `updateDOM` will: (\*make sure updateDOM has focus code instead now)
+- Notice that in each sub-array, index `[0]` is the type of DOM element we want to create, index `[1]` has details of what we want that element to contain or display, and index `[2]` is an event handler callback function.
 
-9. Update our `vDOM` variable to be the returned result of invoking `createDOM()`. `vDOM` will now contain the details we need to make our elements.
+6. Edit the `convert` function to make sure it will properly convert each sub-array in our `vDOM` into a DOM element, accounting for the different properties on different element types, as well as setting any event handlers.
 
-10. Update `jsInput` to be the returned result of the invoking `convert`, passing the first element in `vDOM`(details array for input element) as an argument.
+7. Declare a function `'updateDOM'`. This function will:
+   - Update our `vDOM` variable to be the returned result of invoking `createDOM()`.
+   - Use the `convert` function with our new `vDOM` details to update `jsInput` and `jsDiv` with a new DOM element (linked through a JS object).
+   - Replace any children on the body of the DOM with our new elements.
+   - Re-set the `focus` to be on the input if it has been clicked on (feel free to copy this code from the `component` function where it was given to you).
 
-11. Update `jsDiv` to be the returned result of invoking `convert`, passing the second element in `vDOM`(details array for div element) as an argument.
+Now, all of `component`'s functionality should be replaced by the `convert` and `updateDOM` functions.
 
-12. We now have our elements created, but we need to append them to the dom using `replaceChildren`, passing in `jsInput` and `jsDiv` as arguments on the `body` property on the `document` object.
+8. Since `updateDOM` is now the function that updates the DOM with our current data, make sure that it is being called regularly so any data changes will reflect on the DOM.
 
-13. The final change we need to make is with out `setInterval` method. Since `updateDOM` is now the function that updates the DOM, that is the function that needs to be passed into `setInterval`.
+Now we have semi-visual coding, yay!
