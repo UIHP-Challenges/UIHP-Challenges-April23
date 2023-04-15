@@ -12,15 +12,38 @@ Create VDOM
 Use new VDOM to create updateDOM function
  * 
  */
-//Example of solution code (slide30)
-let myName = 'Jo'; 
+//Example of solution code (slide31 "creating a javascript 'virtual' dom")
+let myName = '';
+let jsInput;
+let jsDiv;
+let vDOM;
 
-const divInfo = ['div', `Hi, ${myName}!`]; 
+function createVDOM() {
+  return [
+    [
+      'input',
+      myName,
+      function handle() {
+        jsInput.value = myName;
+      },
+    ],
+    ['div', `Hello, ${myName}!`],
+  ];
+}
 
-function convert(node){
-    const elem = document.createElement(node[0])
-    elem.textContent = node[1]
-    return elem
-};
+function updateDOM() {
+  vDOM = createVDOM();
+  jsInput = convert(vDOM[0]);
+  jsDiv = convert(vDOM[1]);
+  document.body.replaceChildren(jsInput, jsDiv);
+}
 
-const jsDiv = convert(divInfo);
+function convert(node) {
+  const element = document.createElement(node[0]);
+  element.textContent = node[1];
+  element.value = node[1];
+  element.onInput = node[2];
+  return element;
+}
+
+setInterval(updateDOM, 15);

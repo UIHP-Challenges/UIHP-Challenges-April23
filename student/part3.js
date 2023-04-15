@@ -1,38 +1,28 @@
-// let isFocus = false;
+//Part 3
 
-let post = undefined; // Data
+let myName = '';
+let isFocus = false;
 
-const jsInput = document.querySelector("input");
-const jsDiv = document.querySelector("div");
+let jsInput = document.querySelector('input');
+let jsDiv = document.querySelector('div');
 
 function dataToView() {
-  // JS -> DOM
-  jsInput.value = post == undefined ? `What's on your mind?` : post;
-  jsDiv.textContent = post;
+  jsInput.value = myName;
+  jsDiv.textContent = myName;
 }
 
 function handleInput() {
-  post = jsInput.value;
+  myName = jsInput.value;
 }
 
 jsInput.oninput = handleInput;
 
+// function component() {
+//   document.activeElement === jsInput ? (isFocus = true) : (isFocus = false);
+
+//   //your code here
+
+//   if (isFocus) jsInput.focus();
+// }
+
 setInterval(dataToView, 15);
-
-//ONCE YOU HAVE BUILT OUT "component" function: <- change to after they complete part #?
-
-//1. Uncomment line 1
-
-//2. At the very beginning of the "component" function, add this line:
-/* document.activeElement === jsInput ? (isFocus = true) : (isFocus = false); */
-
-//3. At the very end of the "component" function, ad the following line:
-/* if (isFocus) jsInput.focus(); */
-
-//ONCE YOU HAVE BUILT OUT "updateDOM" function: <- change to after they complete part #?
-
-//1. At the very beginning of the "updateDOM" function, add this line:
-/* document.activeElement === jsInput ? (isFocus = true) : (isFocus = false); */
-
-//2. At the very end of the "updateDOM" function, add the following line:
-/* if (isFocus) jsInput.focus(); */
