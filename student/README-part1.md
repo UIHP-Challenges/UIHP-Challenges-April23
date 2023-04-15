@@ -8,7 +8,7 @@ Part 1 will cover topics including HTML & markup in the web browser, JavaScript 
 
 ## How do I get started?
 
-[add instructions to fork/clone repo or however we're going to do it]
+Download this [zip folder]() containing all of the files you'll need for these challenges. 
 
 ### Part 1: Building an Interactive UI
 
@@ -32,7 +32,8 @@ Now what? Even if we can change the data on the DOM, we can't do anything with t
 
 5. Uncomment the `<script>` tag in `index.html`. This script acts as a link between the `html` and the code in the linked JavaScript file. When our `script` loads with our HTML in the browser, the JavaScript engine will start running and allow us to run our JS code in the browser directly (and access everything else we get with the JS runtime, including `memory` to store data).
 
-   In our JavaScript runtime, we have access to some very useful APIs, including [document](https://developer.mozilla.org/en-US/docs/Web/API/Document). In `part1.js`, if you `console.log(document)`, you will see an object in the browser dev tools console. This `document` object also has a hidden property that acts as a link to the DOM.
+        **Extension Challenge: Document Object** 
+        - In our JavaScript runtime, we have access to some very useful APIs, including [document](https://developer.mozilla.org/en-US/docs/Web/API/Document). In `part1.js`, if you `console.log(document)`, you will see an object in the browser dev tools console. This `document` object also has a hidden property that acts as a link to the DOM.
 
 6. In `part1.js`, declare a variable `post` and initialize it to a string that is your name. Congrats - we have data! Now, how can we use it to update the DOM and what we see in our view?
 
