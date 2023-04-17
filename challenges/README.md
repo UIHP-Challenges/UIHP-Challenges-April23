@@ -10,7 +10,7 @@ Part 1 will cover topics including HTML & markup in the web browser, JavaScript 
 
 ## Part 1: Building an Interactive UI
 
-**In UI Engineering we have **2 simple goal**:
+In UI Engineering we have **2 simple goal**:
 
 - Display content (data) for users to see.
 - Enable our users to interact with the content they see, and then change it.
@@ -82,12 +82,12 @@ Now we're changing our 'view' based on several different possible user interacti
 
 5. Now that the `dataToView` function uses our JS data to update the DOM content, we need to make sure it is invoked after our data changes. What adjustments can we make to our event handlers so that they only make changes to the underlying data, and what should happen as soon as a change is made? 
 
-6. While it may not be efficient, we can have our `dataToView` run so often that any change to data will instantly propagate using a [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval) function at a rate that is close to the browser refresh rate. Use `setInterval` to implement this. 
+6. While it may not be efficient, we can have our `dataToView` run so often that any change to data will instantly propagate using a [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval) function at a rate that is close to the browser refresh rate.
 
 ---
 
-***Extension Challenge: Additional Functionality*** <br/>
-*Add a submit button that will create and save a new post. How can you implement this kind of functionality in your application? In addition, set up some logic for creating divs that hold previous 'posts' so that the user is able to see all their previous posts.**
+***Extension Challenge: Submit Button*** <br/>
+*Add a submit button that will create and save a new post. How can you implement this kind of functionality in your application? In addition, set up some logic for creating divs that hold previous 'posts' so that the user is able to see all their previous posts.*
 
 - - - 
 
@@ -219,11 +219,6 @@ We're getting semi-visual coding - yay!
 
 - - -
 
-***Extension Challenge: Directives*** <br/>
-*Another way that we can give our elements more functionality is by creating functions that take in our element and "decorate it" with added functionality before returning it. In this case, each element on the page has a chance to "do" something in the user's eyes. In reality, that "doing" is happening in JavaScript (e.g. checking a conditional, a loop, etc) and then updating the view (DOM). Try making your elements store some kind of functionality.*
-
----
-
 ## Part 5: Hooks & Diffing
 
 Now that we've learned to build a declarative UI using semi-visual coding and we've also created 'element-flexible' code to 'compose' our logic, let's augment our vDOM elements to include additional functionality.
@@ -242,7 +237,7 @@ So, let's introduce a "state hook". Instead of directly updating `myName`, we ca
 
 5. Reassign `myName` to this passed-in `value`. Don't forget to also invoke `updateDOM`.
 
-Perhaps we can lock down `myName` so that we it cannot be accessed directly. Better yet, perhaps we can refactor our function so that it works for any piece of data in our app - then we can just "hook" into it.
+Perhaps we can lock down `myName` so that it cannot be accessed directly. Better yet, we can refactor our function so that it works for any piece of data in our app - then we can just "hook" into it.
 
 6. We can start by wrapping `myName = ''` in brackets to place it inside of an object. Then, rename the property `myName` to `name` to make it more applicable to anything.
 
@@ -275,7 +270,18 @@ So, let's write a diffing algorithm! You're provided with the first half of this
 
 16. Inside of your `updateDOM` function, assign the value of `prevVDOM` to an array with the `vDOM` elements _spread_ into the array. Then, check to see if `elems` is _strictly equal to_ `undefined`. If it is, move your `elems = vDOM.map(convert)` line inside of the conditional. Otherwise (else), we can invoke our `findDiff` function with `prevVDOM` and `vDOM` passed in.
 
-17. Finally, let's call our `updateDOM` function with `setInterval` again. (Include explanation as to why we do this).
+17. Finally, let's call our `updateDOM` function with `setInterval` again. 
+
+- - -
+
+***Extension Challenges: Additional Functionality*** 
+<br/> 
+
+***Directives:*** <br/>
+*Another way that we can give our elements more functionality is by creating functions that take in our element and "decorate it" with added functionality before returning it. In this case, each element on the page has a chance to "do" something in the user's eyes. In reality, that "doing" is happening in JavaScript (e.g. checking a conditional, a loop, etc) and then updating the view (DOM). Try making your elements store some kind of functionality.*
+
+***Functional Components:*** <br/>
+*We can also improve our VDOM elements to include additional functionality by creating our elements with a function. This function  returns the element out, but before it does, it can run JavaScript code to determine exactly what will be returned. How would you refactor your elements to make them functional in this way? Popular UI frameworks such as React embrace this style of engineering, so if you haven't explored functional components yet, now's your chance!*
 
 ---
 
