@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 ## Part 5: Hooks & Diffing
-=======
-## Part 5: Hooks & Diffing: How we can give our elements additional functionality.
->>>>>>> dev
 
 Now that we've learned to build a declarative UI using semi-visual coding and we've also created 'element-flexible' code to 'compose' our logic, let's augment our vDOM elements to include additional functionality.
 

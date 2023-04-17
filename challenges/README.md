@@ -180,6 +180,11 @@ Now, all of `component`'s functionality should be replaced by the `convert` and 
 
 8. Since `updateDOM` is now the function that updates the DOM with our current data, make sure that it is being called regularly so any data changes will reflect on the DOM.
 
+---
+
+***Extension Challenge: Adding Nested Elements to the Virtual DOM*** <br/>
+*What if we wanted more control over placement - what if we had nested elements? Add a few nested elements to the `createVDOM` function return. How might you adjust your `convert` function so that it can handle nested elements in the vDOM using semi-visual coding?*
+
 - - -
 
 ## Part 4: Flexible DOM Composition
@@ -251,7 +256,7 @@ Perhaps we can lock down `myName` so that we it cannot be accessed directly. Bet
 ---
 
 ***Extension Challenge: requestAnimationFrame()*** <br/>
-*Implement [`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) rather than `updateDom` directly on data change - so that it never prioritizes over animations (CSS etc).*
+*Implement [`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) rather than `updateDom` directly on data change, so that it never prioritizes over animations (CSS etc).*
 
 ---
 
