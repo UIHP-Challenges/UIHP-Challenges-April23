@@ -219,6 +219,11 @@ We're getting semi-visual coding - yay!
 
 - - -
 
+***Extension Challenge: Directives*** <br/>
+*Another way that we can give our elements more functionality is by creating functions that take in our element and "decorate it" with added functionality before returning it. In this case, each element on the page has a chance to "do" something in the user's eyes. In reality, that "doing" is happening in JavaScript (e.g. checking a conditional, a loop, etc) and then updating the view (DOM). Try making your elements store some kind of functionality.*
+
+---
+
 ## Part 5: Hooks & Diffing
 
 Now that we've learned to build a declarative UI using semi-visual coding and we've also created 'element-flexible' code to 'compose' our logic, let's augment our vDOM elements to include additional functionality.
