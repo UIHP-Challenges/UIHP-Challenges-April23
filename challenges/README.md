@@ -6,16 +6,20 @@ The purpose of these challenges is to learn an under-the-hood understanding of b
 
 Part 1 will cover topics including HTML & markup in the web browser, JavaScript & the DOM API, and data-binding in UI development.
 
+
+
 - - -
 
 ## Part 1: Building an Interactive UI
 
-**In UI Engineering we have **2 simple goal**:
+In UI Engineering we have **2 simple goals**:
 
 - Display content (data) for users to see.
 - Enable our users to interact with the content they see, and then change it.
 
-1. First, let's take a look at the `index.html` file. Open it in the browser - to do this, in your terminal, make sure you have navigated to this directory, and run the command `open index.html`. This should automatically open the file in your default web browser.
+1. First, let's take a look at the `index.html` file. Open it in the browser.
+    - To do this in Glitch, at the bottom of the page, click on *preview* > *open preview pane*. 
+    - To do this in your terminal, make sure you have navigated to the correct directory and run the command `open index.html`. This should automatically open the file in your default web browser.
 
 What do you see? Your tab or window should show the text you see inside the `<title>` in `index.html`, but the page itself should be totally blank. You can also `inspect` the page and view your `html` code in Chrome DevTools. For more info about how to use Chrome DevTools, check out their [docs](https://developer.chrome.com/docs/devtools/).
 
@@ -82,12 +86,12 @@ Now we're changing our 'view' based on several different possible user interacti
 
 5. Now that the `dataToView` function uses our JS data to update the DOM content, we need to make sure it is invoked after our data changes. What adjustments can we make to our event handlers so that they only make changes to the underlying data, and what should happen as soon as a change is made? 
 
-6. While it may not be efficient, we can have our `dataToView` run so often that any change to data will instantly propagate using a [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval) function at a rate that is close to the browser refresh rate. Use `setInterval` to implement this. 
+6. While it may not be efficient, we can have our `dataToView` run so often that any change to data will instantly propagate using a [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval) function at a rate that is close to the browser refresh rate.
 
 ---
 
-***Extension Challenge: Additional Functionality*** <br/>
-*Add a submit button that will create and save a new post. How can you implement this kind of functionality in your application? In addition, set up some logic for creating divs that hold previous 'posts' so that the user is able to see all their previous posts.**
+***Extension Challenge: Submit Button*** <br/>
+*Add a submit button that will create and save a new post. How can you implement this kind of functionality in your application? In addition, set up some logic for creating divs that hold previous 'posts' so that the user is able to see all their previous posts.*
 
 - - - 
 
@@ -180,6 +184,11 @@ Now, all of `component`'s functionality should be replaced by the `convert` and 
 
 8. Since `updateDOM` is now the function that updates the DOM with our current data, make sure that it is being called regularly so any data changes will reflect on the DOM.
 
+---
+
+***Extension Challenge: Adding Nested Elements to the Virtual DOM*** <br/>
+*What if we wanted more control over placement - what if we had nested elements? Add a few nested elements to the `createVDOM` function return. How might you adjust your `convert` function so that it can handle nested elements in the vDOM using semi-visual coding?*
+
 - - -
 
 ## Part 4: Flexible DOM Composition
@@ -222,9 +231,7 @@ Now that we've learned to build a declarative UI using semi-visual coding and we
 
 We love the virtual DOM for semi-visual coding, but it's not very efficient as is. We need some improvements. It's great that we are able to update `myName` -- but how can we make this code better?
 
-We can run on data change, but now our vDOM isn't "real" -- it's only rendered as though we've run the `updateDOM` function upon every data change, which is unlikely.
-
-So, let's introduce a "state hook". Instead of directly updating `myName`, we can create a function to do so by implementing some logic and calling our `updateDOM`.
+We can run on data change, but now our vDOM isn't "real". It's only rendered as though we've run the `updateDOM` function upon every data change, which is unlikely. So, let's introduce a "state hook". Instead of directly updating `myName`, we can create a function to do so by implementing some logic and calling our `updateDOM`.
 
 3. First, let's get rid of the `setInterval` function to avoid repeated calls to our function.
 
@@ -232,7 +239,7 @@ So, let's introduce a "state hook". Instead of directly updating `myName`, we ca
 
 5. Reassign `myName` to this passed-in `value`. Don't forget to also invoke `updateDOM`.
 
-Perhaps we can lock down `myName` so that we it cannot be accessed directly. Better yet, perhaps we can refactor our function so that it works for any piece of data in our app - then we can just "hook" into it.
+Perhaps we can lock down `myName` so that it cannot be accessed directly. Better yet, we can refactor our function so that it works for any piece of data in our app - then we can just "hook" into it.
 
 6. We can start by wrapping `myName = ''` in brackets to place it inside of an object. Then, rename the property `myName` to `name` to make it more applicable to anything.
 
@@ -251,7 +258,7 @@ Perhaps we can lock down `myName` so that we it cannot be accessed directly. Bet
 ---
 
 ***Extension Challenge: requestAnimationFrame()*** <br/>
-*Implement [`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) rather than `updateDom` directly on data change - so that it never prioritizes over animations (CSS etc).*
+*Implement [`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) rather than `updateDom` directly on data change, so that it never prioritizes over animations (CSS etc).*
 
 ---
 
@@ -265,7 +272,18 @@ So, let's write a diffing algorithm! You're provided with the first half of this
 
 16. Inside of your `updateDOM` function, assign the value of `prevVDOM` to an array with the `vDOM` elements _spread_ into the array. Then, check to see if `elems` is _strictly equal to_ `undefined`. If it is, move your `elems = vDOM.map(convert)` line inside of the conditional. Otherwise (else), we can invoke our `findDiff` function with `prevVDOM` and `vDOM` passed in.
 
-17. Finally, let's call our `updateDOM` function with `setInterval` again. (Include explanation as to why we do this).
+17. Finally, let's call our `updateDOM` function with `setInterval` again. 
+
+- - -
+
+***Extension Challenges: Additional Functionality*** 
+<br/> 
+
+***Directives:*** <br/>
+*Another way that we can give our elements more functionality is by creating functions that take in our element and "decorate it" with added functionality before returning it. In this case, each element on the page has a chance to "do" something in the user's eyes. In reality, that "doing" is happening in JavaScript (e.g. checking a conditional, a loop, etc) and then updating the view (DOM). Try making your elements store some kind of functionality.*
+
+***Functional Components:*** <br/>
+*We can also improve our VDOM elements to include additional functionality by creating our elements with a function. This function  returns the element out, but before it does, it can run JavaScript code to determine exactly what will be returned. How would you refactor your elements to make them functional in this way? Popular UI frameworks such as React embrace this style of engineering, so if you haven't explored functional components yet, now's your chance!*
 
 ---
 

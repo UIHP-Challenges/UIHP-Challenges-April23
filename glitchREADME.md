@@ -6,9 +6,7 @@ The purpose of these challenges is to learn an under-the-hood understanding of b
 
 Part 1 will cover topics including HTML & markup in the web browser, JavaScript & the DOM API, and data-binding in UI development.
 
-## How do I get started?
 
-[add instructions to fork/clone repo or however we're going to do it]
 
 - - -
 
@@ -16,11 +14,12 @@ Part 1 will cover topics including HTML & markup in the web browser, JavaScript 
 
 In UI Engineering we have **2 simple goals**:
 
-    1) Display content (data) for users to see.
+- Display content (data) for users to see.
+- Enable our users to interact with the content they see, and then change it.
 
-    2) Enable our users to interact with the content they see, and then change it.
-
-1. First, let's take a look at the `index.html` file. Open it in the browser - to do this, in your terminal, make sure you have navigated to this directory, and run the command `open index.html`. This should automatically open the file in your default web browser.
+1. First, let's take a look at the `index.html` file. Open it in the browser.
+    - To do this in Glitch, at the bottom of the page, click on *preview* > *open preview pane*. 
+    - To do this in your terminal, make sure you have navigated to the correct directory and run the command `open index.html`. This should automatically open the file in your default web browser.
 
 What do you see? Your tab or window should show the text you see inside the `<title>` in `index.html`, but the page itself should be totally blank. You can also `inspect` the page and view your `html` code in Chrome DevTools. For more info about how to use Chrome DevTools, check out their [docs](https://developer.chrome.com/docs/devtools/).
 
@@ -34,8 +33,13 @@ Now what? Even if we can change the data on the DOM, we can't do anything with t
 
 5. Uncomment the `<script>` tag in `index.html`. This script acts as a link between the `html` and the code in the linked JavaScript file. When our `script` loads with our HTML in the browser, the JavaScript engine will start running and allow us to run our JS code in the browser directly (and access everything else we get with the JS runtime, including `memory` to store data).
 
-        **Extension Challenge: Document Object** 
-        - In our JavaScript runtime, we have access to some very useful APIs, including [document](https://developer.mozilla.org/en-US/docs/Web/API/Document). In `part1.js`, if you `console.log(document)`, you will see an object in the browser dev tools console. This `document` object also has a hidden property that acts as a link to the DOM.
+
+---
+
+***Extension Challenge: Document Object*** 
+*- In our JavaScript runtime, we have access to some very useful APIs, including [document](https://developer.mozilla.org/en-US/docs/Web/API/Document). In `part1.js`, if you `console.log(document)`, you will see an object in the browser dev tools console. This `document` object also has a hidden property that acts as a link to the DOM.*
+
+---
 
 6. In `part1.js`, declare a variable `post` and initialize it to a string that is your name. Congrats - we have data! Now, how can we use it to update the DOM and what we see in our view?
 
@@ -82,7 +86,12 @@ Now we're changing our 'view' based on several different possible user interacti
 
 5. Now that the `dataToView` function uses our JS data to update the DOM content, we need to make sure it is invoked after our data changes. What adjustments can we make to our event handlers so that they only make changes to the underlying data, and what should happen as soon as a change is made? 
 
-6. While it may not be efficient, we can have our `dataToView` run so often that nay change to data will instantly propagate using a [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval) function at a rate that is close to the browser refresh rate. Use `setInterval` to implement this. 
+6. While it may not be efficient, we can have our `dataToView` run so often that any change to data will instantly propagate using a [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval) function at a rate that is close to the browser refresh rate.
+
+---
+
+***Extension Challenge: Submit Button*** <br/>
+*Add a submit button that will create and save a new post. How can you implement this kind of functionality in your application? In addition, set up some logic for creating divs that hold previous 'posts' so that the user is able to see all their previous posts.*
 
 - - - 
 
@@ -105,22 +114,17 @@ Instead, let's create our DOM elements with JavaScript. A `UI Component` is a fu
    - [Creating](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement) DOM elements (instead of selecting them).
      - Feel free to keep the `jsInput` and `jsDiv` variable declarations at the top of the file, but unitialized - you will reassign the values to be the new objects you create.
    - Setting their contents based on our JS data.
+     - Once this happens inside `component`, we should no longer need our `dataToView` function.
    - Creating and attaching event handlers to them.
    - Displaying our new DOM elements in the view.
 
    In order to achieve this last step, we need to attach or `append` them to the body of the DOM. There a a couple of ways to do this, but to make sure we are replacing our nodes with an updated version when our data changes (instead of accidentally attaching multiple copies of our input or div), use [replaceChildren](https://developer.mozilla.org/en-US/docs/Web/API/Document/replaceChildren).
 
-Now, our view should look the same as it did before, but our code should consist of 3 parts - our declared variables at the top of the file, the `convert` function (where all of our functionality will be now), and `setInterval`.
+Now, our view should look the same as it did before, but our code should consist of 3 parts - our declared variables at the top of the file, the `component` function (where all of our functionality will be now), and `setInterval`.
 
----
+However, our code is still fairly imperative - just glancing at it, it's hard to tell what our view will look like. The more "visual" our code is (like HTML), the easier it is for us to work with as developers.
 
-\*\*edits to do below this line
-
-However, our code is still fairly imperative - just glancing at it,
-
-something about making our code more visual yet still dynamic/flexible
-
-As an example, let's take a look at `string interpolation`, using template literals. Imagine we wanted the text content of a div element to be the string "I live in (user's location)!". One way we can do this is to use the `concat` method to build out our `textContent` line by line:
+For example - imagine we wanted the text content of a div element to be the string "I live in (user's location)!". We can use the `concat` method to build out our string piece by piece:
 
 ```javascript
 let userLocation = 'LA';
@@ -130,43 +134,60 @@ textToDisplay = textToDisplay.concat(userLocation);
 textToDisplay = textToDisplay.concat('!');
 ```
 
-Remember, the closer we get our code to mirror what it's actual visual/graphic output looks like, the easier it is for us as developers. So, to make this code look more `"visual"`, we can use a template literal with backticks:
+However, this is not very visual or declarative. So instead, we can use a `template literal` with `string interpolation`:
 
 ```javascript
 textToDisplay = `I live in ${userLocation}!`;
 ```
 
-As we can see, this looks a lot more semantic. Now, we can something similar here creating visual elements.
+As we can see, this mirrors what our visual/graphic output will be. Could we do something similar with our main code creating visual elements?
 
-Now, we should be able to see our component on the screen! We will now shift over to making our Virtual DOM in JavaScript. To do this, we are going to have to tweak our code a bit. Now, let's start by declaring the global variable `vDOM` that we will be building out later, and our `createVDOM` function. `createVDOM` is going to be returning an array with all of the details of our elements, which themselves will be arrays. We will have two arrays:
+Let's start with a "unit of code" representing each piece of our view.
 
-4. The first array in the returned array from `createVDOM` will have 3 elements, `"input"`, `userName`, and a function `handle` that assigns `userName` to the value of `jsInput` (`handle` in this case replaces the `handleInput` event handler). This array will contain the details for `jsInput` down the line.
+```javascript
+const divInfo = ['div', `Hi, ${myName}!`];
+```
 
-5. The second array is only going to have 2 elements, `"div"` and the template literal `Hello, ${userName}!`. This will of course be the details for `jsDiv`.
+In this example, our `divInfo` is an array with the details of a DOM element - just by looking at our code, we can tell what it will look like (the type (div) and the text that will display inside).
 
-6. We are now going to want to create a function that converts our pieces of `view` in the virtual DOM to elements. Declare a function `convert` that has one parameter, `node`(array of details). `convert` should:
+3. In `part3.js`, write a function `'convert'` that will take in a `node` (an array of details like our 'divInfo' example above). This function should use that array to create a new DOM element and set its content, and return its linked JavaScript object.
 
-7. Declare a constant `element` that is initialized to a new element by passing the first element) in `node` as an argument to `createElement`.
+   With this function, we can now produce DOM elements from any list of info that visually mirrors what we will see in our view.
 
-8. Assign both the `textContent` and `value` properties on `element` to be the second element in `node`.
+Next, let's create our `virtual DOM` - blocks of code (or a _list_) representing each piece of our view.
 
-9. Assign the `oninput` property on `element` to be the third element in `node`.
+4. Declare a global variable `'vDOM'` but do not initialize it.
 
-10. Finally, return `element`.
+5. Write a function `'createVDOM'` that returns a list (array) containing the following two sub-arrays:
 
-11. At this point, we have a function that returns an array details for our elements, `createVDOM`, and a function that converts those details into actual elements, `convert`. So, now we just need a function that actually updates.
+```javascript
+[
+  'input',
+  myName,
+  function handle() {
+    myName = jsInput.value;
+  },
+][('div', `Hello, ${myName}!`)];
+```
 
-Declare the function `updateDOM` that will now act as our convertor. `updateDOM` will: (\*make sure updateDOM has focus code instead now)
+- Notice that in each sub-array, index `[0]` is the type of DOM element we want to create, index `[1]` has details of what we want that element to contain or display, and index `[2]` is an event handler callback function.
 
-9. Update our `vDOM` variable to be the returned result of invoking `createDOM()`. `vDOM` will now contain the details we need to make our elements.
+6. Edit the `convert` function to make sure it will properly convert each sub-array in our `vDOM` into a DOM element, accounting for the different properties on different element types, as well as setting any event handlers.
 
-10. Update `jsInput` to be the returned result of the invoking `convert`, passing the first element in `vDOM`(details array for input element) as an argument.
+7. Declare a function `'updateDOM'`. This function will:
+   - Update our `vDOM` variable to be the returned result of invoking `createDOM()`.
+   - Use the `convert` function with our new `vDOM` details to update `jsInput` and `jsDiv` with a new DOM element (linked through a JS object).
+   - Replace any children on the body of the DOM with our new elements.
+   - Re-set the `focus` to be on the input if it has been clicked on (feel free to copy this code from the `component` function where it was given to you).
 
-11. Update `jsDiv` to be the returned result of invoking `convert`, passing the second element in `vDOM`(details array for div element) as an argument.
+Now, all of `component`'s functionality should be replaced by the `convert` and `updateDOM` functions.
 
-12. We now have our elements created, but we need to append them to the dom using `replaceChildren`, passing in `jsInput` and `jsDiv` as arguments on the `body` property on the `document` object.
+8. Since `updateDOM` is now the function that updates the DOM with our current data, make sure that it is being called regularly so any data changes will reflect on the DOM.
 
-13. The final change we need to make is with out `setInterval` method. Since `updateDOM` is now the function that updates the DOM, that is the function that needs to be passed into `setInterval`.
+---
+
+***Extension Challenge: Adding Nested Elements to the Virtual DOM*** <br/>
+*What if we wanted more control over placement - what if we had nested elements? Add a few nested elements to the `createVDOM` function return. How might you adjust your `convert` function so that it can handle nested elements in the vDOM using semi-visual coding?*
 
 - - -
 
@@ -204,55 +225,66 @@ We're getting semi-visual coding - yay!
 
 ## Part 5: Hooks & Diffing
 
-Now that we've learned to build a declarative UI using semi-visual coding and we've also created 'element-flexible' code to 'compose' our logic, let's augment our VDOM elements to include additional functionality. 
+Now that we've learned to build a declarative UI using semi-visual coding and we've also created 'element-flexible' code to 'compose' our logic, let's augment our vDOM elements to include additional functionality.
 
 1. In `index.html`, edit the `script` tag to use `part5.js` as the `src` file.
 
-We love the virtual DOM for semi-visual coding, but it's not very efficient. We need some improvements. It's great that we are able to update `myName` -- but how can we make this code better? Currently, we're rendering our functions every 15ms - CSS animations, smooth scrolling, and even user action handlers are at risk or can be blocked. 
+We love the virtual DOM for semi-visual coding, but it's not very efficient as is. We need some improvements. It's great that we are able to update `myName` -- but how can we make this code better?
 
-We can run on data change, but now our VDOM isn't "real" -- it's only rendered as though we've run the `updateDOM` function upon every data change, which is unlikely. 
+We can run on data change, but now our vDOM isn't "real". It's only rendered as though we've run the `updateDOM` function upon every data change, which is unlikely. So, let's introduce a "state hook". Instead of directly updating `myName`, we can create a function to do so by implementing some logic and calling our `updateDOM`.
 
-So, let's introduce a "state hook". Instead of directly updating `myName`, we can create a function to do so by implementing some logic and calling our `updateDOM`.
+3. First, let's get rid of the `setInterval` function to avoid repeated calls to our function.
 
-3. First, let's get rid of the `setInterval` function to avoid repeated calls to our function. 
+4. Initialize a function `updateName` which takes in `value`.
 
-4. Initialize a function `updateName` which takes in `value`. 
+5. Reassign `myName` to this passed-in `value`. Don't forget to also invoke `updateDOM`.
 
-5. Reassign `myName` to this passed-in `value`. Don't forget to also invoke `updateDOM`. 
+Perhaps we can lock down `myName` so that it cannot be accessed directly. Better yet, we can refactor our function so that it works for any piece of data in our app - then we can just "hook" into it.
 
-As long as we restrict ourselves from ever changing data directly and only doing so by using the `updateName` function, then we're fine. Perhaps we can lock down `myName` so that we it cannot be accessed directly. Better yet, perhaps we can refactor our function so that it works for any piece of data in our app - then we can just "hook" into it. 
+6. We can start by wrapping `myName = ''` in brackets to place it inside of an object. Then, rename the property `myName` to `name` to make it more applicable to anything.
 
-6. We can start by wrapping ```myName = ''``` in brackets to place it inside of an object. Then, rename the property `myName` to `name` to make it more applicable to anything.
-
-7. Let's assign this object to a variable `data` so that it's clear that it can hold any piece of information that we would like to add or update in our app. 
+7. Let's assign this object to a variable `data` so that it's clear that it can hold any piece of information that we would like to add or update in our app.
 
 8. Rename the `updateName` function to something more semantic, such as `updateData`. Have it take in a `label` in addition to `value`.
 
-8. Now, we can store our `label` in the `data` object and assign it the value of the passed-in `value` so that we can specify what is being updated, and what that something is being updated with. 
+9. Now, we can store our `label` in the `data` object and assign it the value of the passed-in `value` so that we can specify what is being updated, and what that something is being updated with.
 
-9. Since we just have implemented changes to the logic in our `updateData` function, we should probably also make some adjustments to our `createVDOM` function. Instead of passing in `myName`, how can we pass in the `myName` property on the `data` object? 
+10. Since we have just implemented changes to the logic in our `updateData` function, we should probably also make some adjustments to our `createVDOM` function. Instead of passing in `myName`, how can we pass in the `myName` property on the `data` object?
 
-10. Instead of defining and invoking the `handle` function inside of `createVDOM`, what function might we pass in now that we have created logic for (**hint**) updating data?
+11. Instead of defining and invoking the `handle` function inside of `createVDOM`, what function might we pass in now that we have created logic for (**hint**) updating data?
 
-11. Lastly, rather than passing in `myName` into the string literal in the `createVDOM` function, what could we pass in instead based on the previous steps?
+12. Lastly, rather than passing in `myName` into the string literal in the `createVDOM` function, what could we pass in instead based on the previous steps?
 
-**Extension Challenge: requestAnimationFrame** 
-    - We can switch to running `requestAnimationFrame` rather than `updateDom` directly on data change - so that it never prioritizes over animations (CSS etc). (Add directions here). 
+---
 
-How can we refactor our code make it more efficient but still allow for automatic updates upon changes made to the data? We can write an 'algorithm', or a series of smart instructures, to check what elements actually **differ** - and only change the DOM elements that need to be updated. 
+***Extension Challenge: requestAnimationFrame()*** <br/>
+*Implement [`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) rather than `updateDom` directly on data change, so that it never prioritizes over animations (CSS etc).*
 
-So, let's write a diffing algorithm! You're provided with the first half of this function `findDiff`. As you can see, it takes in two parameters - `prevDOM` and `currentVDOM`. Inside of our `findDiff` function, we're looping through the `currentVDOM` array. Then, we are using `JSON.stringify` to convert values to JSON strings. Feel free to read the [docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) but don't worry too much about this method right now -- the point of using it here is to compare for equal values -- not to check if two objects/arrays are pointing to the same object in memory. 
+---
 
-14. Inside of the conditional statement, we want to change the DOM element related to the respective vDOM elements. We can do this by grabbing the `elems` (which we have updated in the `document.body` inside of our call to the `replaceChildren` method `updateDOM`) at the current index (`i`) and updating the `textContent` and `value` fields of these elements with the `currentVDOM` at the current index(`i`). What happens when you `console.log(currentVDOM[i])? Is there a specific value you need to grab? 
+How can we refactor our code make it more efficient but still allow for automatic updates upon changes made to the data? We can write an 'algorithm', or a series of smart instructures, to check what elements actually **differ** - and only change the DOM elements that need to be updated.
 
-15. Let's also implement some logic for differentating between the `prevVDOM` and `vDOM`. Declare a variable prevDom at the top of the file. 
+So, let's write a diffing algorithm! You're provided with the first half of this function `findDiff`. As you can see, it takes in two parameters - `prevDOM` and `currentVDOM`. Inside of our `findDiff` function, we're looping through the `currentVDOM` array. Then, we are using `JSON.stringify` to convert values to JSON strings. Feel free to read the [docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) but don't worry too much about this method right now -- the point of using it here is to compare for equal values -- not to check if two objects/arrays are pointing to the same object in memory.
 
-16. Inside of your `updateDOM` function, assign the value of `prevVDOM` to an array with the `vDOM` elements *spread* into the array. Then, check to see if `elems` is *strictly equal to* `undefined`. If it is, move your `elems = vDOM.map(convert) line inside of the conditional. Otherwise (else), we can invoke our `findDiff` function with `prevVDOM` and `vDOM` passed in. 
+14. Inside of the conditional statement, we want to change the DOM element related to the respective vDOM elements. We can do this by grabbing the `elems` (which we have updated in the `document.body` inside of our call to the `replaceChildren` method `updateDOM`) at the current index (`i`) and updating the `textContent` and `value` fields of these elements with the `currentVDOM` at the current index(`i`). What happens when you `console.log(currentVDOM[i])? Is there a specific value you need to grab?
 
-17. Finally, let's call our `updateDOM` function with `setInterval` again. (Include explanation as to why we do this). 
+15. Let's also implement some logic for differentiating between the `prevVDOM` and `vDOM`. Declare a variable prevDom at the top of the file.
 
-- - - 
+16. Inside of your `updateDOM` function, assign the value of `prevVDOM` to an array with the `vDOM` elements _spread_ into the array. Then, check to see if `elems` is _strictly equal to_ `undefined`. If it is, move your `elems = vDOM.map(convert)` line inside of the conditional. Otherwise (else), we can invoke our `findDiff` function with `prevVDOM` and `vDOM` passed in.
 
-Include some kind of final summary to wrap things up at the end of this section here. 
+17. Finally, let's call our `updateDOM` function with `setInterval` again. 
 
-Notes: on slide 43, vDOM is initalized to the value of createVDOM(). Is this necessary? It's assigned to the same value inside of `updateDOM`. Also - typo on slide 43 - should be replaceChildren instead of append
+- - -
+
+***Extension Challenges: Additional Functionality*** 
+<br/> 
+
+***Directives:*** <br/>
+*Another way that we can give our elements more functionality is by creating functions that take in our element and "decorate it" with added functionality before returning it. In this case, each element on the page has a chance to "do" something in the user's eyes. In reality, that "doing" is happening in JavaScript (e.g. checking a conditional, a loop, etc) and then updating the view (DOM). Try making your elements store some kind of functionality.*
+
+***Functional Components:*** <br/>
+*We can also improve our VDOM elements to include additional functionality by creating our elements with a function. This function  returns the element out, but before it does, it can run JavaScript code to determine exactly what will be returned. How would you refactor your elements to make them functional in this way? Popular UI frameworks such as React embrace this style of engineering, so if you haven't explored functional components yet, now's your chance!*
+
+---
+
+Congratulations! After many iterations on the code we start with at the beginning, we now have a composable UI, using our diffing algorithm to make our user interface 'semi-visual'. With the use of our hook, `updateName`, that enabled our logic to work for any piece of data in our app, and our diffing algorithm, `findDiff` that spot the differences in state/view and update only those changes, we have made some real performance improvements from where we started. You can see, after going through all of these challenges, how many steps go into building a efficient and responsive user interface.
