@@ -6,8 +6,6 @@ The purpose of these challenges is to learn an under-the-hood understanding of b
 
 Part 1 will cover topics including HTML & markup in the web browser, JavaScript & the DOM API, and data-binding in UI development.
 
-
-
 - - -
 
 ## Part 1: Building an Interactive UI
