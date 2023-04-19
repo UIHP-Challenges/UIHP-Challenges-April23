@@ -204,41 +204,52 @@ function findDiff(prevVDOM, currentVDOM) {
 setInterval(updateDom(), 15);
  */
 
+let myName = '';
+let vDOM = createVDOM(),
+  prevVDOM,
+  elems;
 
-let myName = ''; let vDOM = createVDOM(), prevVDOM, elems;
-
-function createVDOM(){
-    return [['input', myName, function handle (e){ myName = e.target.value}],
-    ['div', `Hello, ${myName}!`], 
-    ['div', `Great job, Jonathan!`], 
+function createVDOM() {
+  return [
+    [
+      'input',
+      myName,
+      function handle(e) {
+        myName = e.target.value;
+      },
+    ],
+    ['div', `Hello, ${myName}!`],
+    ['div', `Great job, Jonathan!`],
     ['div', `Great job, Alexa!`],
-    ['div', `Great job, Emilia!`]]
-}; 
-
-function updateDom(){
-    prevVDOM = [...vDOM]; 
-    if(elems = undefined){
-        elemens = vDOM.map(convert)
-        document.body.replaceChildren(...elems)
-    }
-    else { findDiff(prevVDOM, vDOM) }
+    ['div', `Great job, Emilia!`],
+  ];
 }
 
-function convert(node){
-    const element = document.createElement(node[0])
-    element.textContent = node[1]
-    element.value = node[1]
-    element.oninput = node[2]
-    return element
+function updateDom() {
+  prevVDOM = [...vDOM];
+  if ((elems = undefined)) {
+    elemens = vDOM.map(convert);
+    document.body.append(...elems);
+  } else {
+    findDiff(prevVDOM, vDOM);
+  }
 }
 
-function findDiff(prevVDOM, currentVDOM) { 
-    for (let i = 0; i < currentVDOM.length; i++) {
-        if(JSON.stringify(prevVDOM[i]) !== JSON.stringify(currentVDOM[i])){
-            elems[i].textContent = currentVDOM[i][1];
-            elems[i].value = currentVDOM[i][1];
-        }
+function convert(node) {
+  const element = document.createElement(node[0]);
+  element.textContent = node[1];
+  element.value = node[1];
+  element.oninput = node[2];
+  return element;
+}
+
+function findDiff(prevVDOM, currentVDOM) {
+  for (let i = 0; i < currentVDOM.length; i++) {
+    if (JSON.stringify(prevVDOM[i]) !== JSON.stringify(currentVDOM[i])) {
+      elems[i].textContent = currentVDOM[i][1];
+      elems[i].value = currentVDOM[i][1];
     }
+  }
 }
 
 setInterval(updateDom(), 15);

@@ -4,7 +4,7 @@
 
 The purpose of these challenges is to learn an under-the-hood understanding of building user interfaces in the web browser. Each challenge will go hand-in-hand with a section of UI Hard Parts.
 
-Part 1 will cover topics including HTML & markup in the web browser, JavaScript & the DOM API, and data-binding in UI development.
+Throughout these challenges, we will cover topics including HTML, JavaScript, & the DOM API in the web browser; one-way data binding and "state-driven" views; the virtual DOM and "composable" UI; and performance optimizations.
 
 ---
 
@@ -16,12 +16,11 @@ In UI Engineering we have **2 simple goals**:
 - Enable our users to interact with the content they see, and then change it.
 
 1. First, let's take a look at the `index.html` file. Open it in the browser.
-   - To do this in Glitch, at the bottom of the page, click on _preview_ > _open preview pane_.
    - To do this in your terminal, make sure you have navigated to the correct directory and run the command `open index.html`. This should automatically open the file in your default web browser.
 
 What do you see? Your tab or window should show the text you see inside the `<title>` in `index.html`, but the page itself should be totally blank. You can also `inspect` the page and view your `html` code in Chrome DevTools. For more info about how to use Chrome DevTools, check out their [docs](https://developer.chrome.com/docs/devtools/).
 
-2. Now, uncomment the `<div>` and an `<input>` in `index.html` and refresh the page in the browser. (Use `command + /` or `control + /` to comment/uncomment code) When our HTML loads now, it will populate the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction) and we can see our input box on the page! Feel free to add some text to your `<div>` and refresh so that you can see it render to the page as well.
+2. Now, uncomment the `<div>` and `<input>` in `index.html` and refresh the page in the browser. (Use `command + /` or `control + /` to comment/uncomment code) When our HTML loads now, it will populate the [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction) and we can see our input box on the page! Feel free to add some text to your `<div>` and refresh so that you can see it render to the page as well.
 
 3. Next, type something into your input box. The pixels on the page show what you have typed - Remember that the underlying DOM data for the `input` node has also updated to reflect your change!
 
@@ -38,17 +37,17 @@ _- In our JavaScript runtime, we have access to some very useful APIs, including
 
 ---
 
-6. In `part1.js`, declare a variable `post` and initialize it to a string that is your name. Congrats - we have data! Now, how can we use it to update the DOM and what we see in our view?
+6. In `part1.js`, declare a variable `'post'` and initialize it to a string that is your name. Congrats - we have data! Now, how can we use it to update the DOM and what we see in our view?
 
-If you're unfamiliar with DOM manipulation, take a look at the [docs](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) on MDN, and particularly the [`querySelector`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector) method (another hidden property on the `document` object!), which allows us to query the DOM to select a specific DOM element and create an object in our JavaScript memory with a hidden "link" to access it. That object will have "property-methods" to get or set the data on that DOM element.
+If you're unfamiliar with DOM manipulation, take a look at the [docs](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) on MDN, and particularly the [`querySelector`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector) method (a hidden property on the `document` object), which allows us to query the DOM to select a specific DOM element and create an object in our JavaScript memory with a hidden "link" to access it. That object will have "property-methods" to get or set the data on that DOM element.
 
-7. Query the DOM to select the `input` node on the DOM and assign the resulting JS object to a variable called `jsInput`. Now do the same for the the `div` node on the DOM and assign the resulting JS object to a variable called `jsDiv`.
+7. Query the DOM to select the `input` node on the DOM and assign the resulting JS object to a variable called `'jsInput'`. Now do the same for the the `div` node on the DOM and assign the resulting JS object to a variable called `'jsDiv'`.
 
 8. Let's use our JS data to update the DOM data. Our `jsDiv` object will have some "getter/setter" property-methods, including [textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent). Set the `jsDiv.textContent` to be the value of our `post` variable. Refresh the page in the browser, and you should see that string as the text in the `div`.
 
 9. Now let's update our JavaScript data based on our user interactions. First, edit your variable declaration for `post` at the top of the file to initialize it to an empty string instead.
 
-   Declare a function `handleInput` that will "handle" what we want to do with what the user types in the input. Use the `value` getter/setter method available on our `jsInput` object. When the user types into the `input`, reassign `post` to hold that text.
+   Declare a function `'handleInput'` that will "handle" what we want to do with what the user types in the input. Use the `value` getter/setter method available on our `jsInput` object. When the user types into the `input`, reassign `post` to hold that text.
 
    Set the `textContent` on the `div` to to be the value of `post` here in `handleInput` instead.
 
@@ -63,20 +62,22 @@ We should now have a full User Interface (UI) which addresses our two main goals
 
 ## Part 2: One-way Data Binding
 
-Now that we have a simple application our users can interact with, how can we make our UI more sophisticated? One thing we can do is implement one-way data binding, a popular paradigm for tackling the essential engineering challenge of keeping data and the 'view' consistent. With one-way data binding, users are automatically updated when the source (provider) data changes, but not the other way around.
+Now that we have a simple application our users can interact with, how can we make our UI more sophisticated? One thing we can do is implement one-way data binding, a popular paradigm for tackling the essential engineering challenge of keeping the 'view' consistent with (and dependent on) our underlying data.
 
 1. In `index.html`, edit the script tag to use `part2.js` as the `src` file.
 
 2. What if we wanted to add some placeholder text to the input box? In your JS file, set the `value` of the `input` box to be the string 'What's on your mind?' and refresh the browser.
 
-3. Notice that the user needs to delete the placeholder text that is in the input box every time they want to type in a new input. Let's add a click handler `handleClick` for the input box which sets the value inside the input box to an empty string when clicked. HINT: Make sure to add `handleClick` to the input element.
+Click into the input and type something. Notice that the user needs to manually delete the placeholder text that is in the input box every time they want to type in a new input.
 
-Now we're changing our 'view' based on several different possible user interactions. How can we make these changes more predictable? Let's restrict every change to view to be via
+3. Let's add a click handler `'handleClick'` for the input box which sets the `value` inside the input box to an empty string when the user clicks in it to type. HINT: Make sure to add `handleClick` as a callback to the input element.
+
+Now we're changing our 'view' based on several different possible user interactions. How can we make these changes more predictable? Let's restrict every change to view to be via:
 
 - an update of 'data'
 - a run of a single `dataToView` convertor function.
 
-4. To do this, let's create a function `dataToView`. It should:
+4. To do this, let's create a function `'dataToView'`. It should:
 
    - Update the value in our input box on the DOM to be whatever `post` currently is. HINT: `post` should now start off as undefined, and if it is undefined when `dataToView` is invoked, we should populate the value in the input box to be the string containing 'What's on your mind?'. This also means `dataToView` needs to be invoked when the page is first loaded.
 
@@ -201,7 +202,7 @@ In `part4.js`, we have a `vDOM` variable (a LIST of subarrays with element detai
 
 2. How can we make sure we always run our `convert` function on each subarray of our `vDOM`, no matter how many there are or if the number of elements in our vDOM changes? (HINT: since we are working with an `array`, we can use the `map` [method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)).
 
-3. Store the resulting _list_ of "converted" JS objects with linked DOM elements in a new variable called `elems`.
+3. Store the resulting _list_ of "converted" JS objects with linked DOM elements in a new variable called `'elems'`.
 
 4. Now our new elements exist on the DOM - what do we need to do to render them to the page? How can we make sure each of our `elems` is appended to the DOM, no matter how many there are?
 
@@ -221,59 +222,6 @@ We're getting semi-visual coding - yay!
 
 ---
 
-## Part 5: Hooks & Diffing
-
-Now that we've learned to build a declarative UI using semi-visual coding and we've also created 'element-flexible' code to 'compose' our logic, let's augment our vDOM elements to include additional functionality.
-
-1. In `index.html`, edit the `script` tag to use `part5.js` as the `src` file.
-
-We love the virtual DOM for semi-visual coding, but it's not very efficient as is. We need some improvements. It's great that we are able to update `myName` -- but how can we make this code better?
-
-We can run on data change, but now our vDOM isn't "real". It's only rendered as though we've run the `updateDOM` function upon every data change, which is unlikely. So, let's introduce a "state hook". Instead of directly updating `myName`, we can create a function to do so by implementing some logic and calling our `updateDOM`.
-
-3. First, let's get rid of the `setInterval` function to avoid repeated calls to our function.
-
-4. Initialize a function `updateName` which takes in `value`.
-
-5. Reassign `myName` to this passed-in `value`. Don't forget to also invoke `updateDOM`.
-
-Perhaps we can lock down `myName` so that it cannot be accessed directly. Better yet, we can refactor our function so that it works for any piece of data in our app - then we can just "hook" into it.
-
-6. We can start by wrapping `myName = ''` in brackets to place it inside of an object. Then, rename the property `myName` to `name` to make it more applicable to anything.
-
-7. Let's assign this object to a variable `data` so that it's clear that it can hold any piece of information that we would like to add or update in our app.
-
-8. Rename the `updateName` function to something more semantic, such as `updateData`. Have it take in a `label` in addition to `value`.
-
-9. Now, we can store our `label` in the `data` object and assign it the value of the passed-in `value` so that we can specify what is being updated, and what that something is being updated with.
-
-10. Since we have just implemented changes to the logic in our `updateData` function, we should probably also make some adjustments to our `createVDOM` function. Instead of passing in `myName`, how can we pass in the `myName` property on the `data` object?
-
-11. Instead of defining and invoking the `handle` function inside of `createVDOM`, what function might we pass in now that we have created logic for (**hint**) updating data?
-
-12. Lastly, rather than passing in `myName` into the string literal in the `createVDOM` function, what could we pass in instead based on the previous steps?
-
----
-
-**_Extension Challenge: requestAnimationFrame()_** <br/>
-_Implement [`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) rather than `updateDom` directly on data change, so that it never prioritizes over animations (CSS etc)._
-
----
-
-How can we refactor our code make it more efficient but still allow for automatic updates upon changes made to the data? We can write an 'algorithm', or a series of smart instructures, to check what elements actually **differ** - and only change the DOM elements that need to be updated.
-
-So, let's write a diffing algorithm! You're provided with the first half of this function `findDiff`. As you can see, it takes in two parameters - `prevDOM` and `currentVDOM`. Inside of our `findDiff` function, we're looping through the `currentVDOM` array. Then, we are using `JSON.stringify` to convert values to JSON strings. Feel free to read the [docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) but don't worry too much about this method right now -- the point of using it here is to compare for equal values -- not to check if two objects/arrays are pointing to the same object in memory.
-
-14. Inside of the conditional statement, we want to change the DOM element related to the respective vDOM elements. We can do this by grabbing the `elems` (which we have updated in the `document.body` inside of our call to the `replaceChildren` method `updateDOM`) at the current index (`i`) and updating the `textContent` and `value` fields of these elements with the `currentVDOM` at the current index(`i`). What happens when you `console.log(currentVDOM[i])? Is there a specific value you need to grab?
-
-15. Let's also implement some logic for differentiating between the `prevVDOM` and `vDOM`. Declare a variable prevDom at the top of the file.
-
-16. Inside of your `updateDOM` function, assign the value of `prevVDOM` to an array with the `vDOM` elements _spread_ into the array. Then, check to see if `elems` is _strictly equal to_ `undefined`. If it is, move your `elems = vDOM.map(convert)` line inside of the conditional. Otherwise (else), we can invoke our `findDiff` function with `prevVDOM` and `vDOM` passed in.
-
-17. Finally, let's call our `updateDOM` function with `setInterval` again.
-
----
-
 **_Extension Challenges: Additional Functionality_**
 <br/>
 
@@ -285,4 +233,78 @@ _We can also improve our VDOM elements to include additional functionality by cr
 
 ---
 
-Well done! After many rounds of refining the initial code, we have successfully created a composable UI that leverages our diffing algorithm to enhance the user experience. By utilizing our `updateData` hook, which allows our logic to function for any data within our application, along with our `findDiff` algorithm, which identifies discrepancies in state/view and solely updates those changes, we have significantly enhanced performance from our starting point. These obstacles we have overcame during these challenges highlight the numerous steps involved in constructing an effective and responsive user interface.
+## Part 5: Hooks & Diffing
+
+Now we've learned to use a "Virtual" DOM for semi-visual coding and we've also created 'element-flexible' code to 'compose' our DOM elements. However, completely rebuilding the entire DOM from scratch every 15 milliseconds makes for terrible performance - as is, our lovely vDOM is quite unusable. We need to add efficiency.
+
+1. In `index.html`, edit the `script` tag to use `part5.js` as the `src` file.
+
+2. First, let's get rid of the `setInterval` to avoid repeated function calls to `updateDOM`.
+   - However, we still need to make sure we create our vDOM and populate the DOM with elements on our initial load/render.
+
+We _could_ call `updateDOM` on every data change (like we did previously inside our event handlers) - but that only works if we _actually_ remember to invoke it everywhere we'd need to, which is unlikely (especially if we have thousands of user actions to handle) - so then our vDOM isn't "real" or guaranteed to accurately reflect our data.
+
+What if, instead of directly updating our data, we run a function to do so?
+
+3. Initialize a function `'updateName'` which takes in a `value`. This function should reassign `myName` to be the passed-in value.
+
+   - `updateName` should _also_ make sure the DOM is updated after we update our data.
+
+4. Make sure any part of your code that previously updated `myName` directly is edited to use `updateName` instead.
+
+If we _only_ ever update `myName` with our new `updateName` function - instead of updating `myName` directly - we can be sure that our DOM is always updated after a data change.
+
+- We would likely "lock down" `myName` so that it cannot be accessed directly (or updated from outside of our updater function).
+
+What if we had more data to manage than `myName`? (Realistically, we would - _much_ more.) Our `updateName` function is great - but can we refactor it so that it works for _any_ piece of data we might have that our view is dependent on?
+
+5. First, declare a new variable `'data'` at the top of our file, and initialize it to an object. Instead of declaring `myName` separately, nest it inside `data` as a key-value pair. That way, our data "store" is more flexible and we can add more things to it as needed.
+
+6. Since we want to make the `updateName` function work with any data, edit it to be called `'updateData'` instead. Have it take in a `'label'` in addition to the `value`.
+
+7. `updateData` should do two things:
+
+   - Update the `value` on our `data` object that is stored under the passed in `label` (or create it if it does not already exist).
+   - Update the DOM after our data has been changed.
+
+8. Since we have just implemented changes to the structure of our `data`, as well as our `updateData` function, make sure that any place in our code that references our data or updates it is adjusted accordingly.
+
+Now, `updateData` works to update any piece of data - or _state_ - and so allows us to just "hook" into it. We have a "state hook"!
+
+---
+
+**_Extension Challenge: requestAnimationFrame()_** <br/>
+_Implement [`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) rather than `updateDom` directly on data change - so that it never prioritizes over animations (CSS etc)._
+
+---
+
+With our new `updateData` **hook**, we have eliminated unnecessary repeated calls to `updateDOM` and make sure we are only updating the DOM if our data has changed. However, we are still recreating the entire DOM from scratch every time - even when some of our elements will be rendered exactly the same.
+
+To solve this problem, we can write an 'algorithm' (a series of "smart instructions"), to check what elements actually **differ** on our updated DOM as compared the the previous DOM - and only change the DOM elements that need to be updated.
+
+So, let's write a diffing algorithm!
+
+9. You're provided with the first half of this function `'findDiff'` - go ahead and uncomment it. As you can see, it takes in two parameters, `prevVDOM` and `currentVDOM`. Declare `'prevVDOM'` globally at the top of the file (but do not initiate it).
+
+   - Inside of `findDiff`, we're iterating through each element of the `currentVDOM` array with a for loop.
+   - Then, we are using `JSON.stringify` to check if each element of our `currentVDOM` matches the corresponding element of `prevVDOM` or if it has changed. Feel free to read the [docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify), but don't worry too much about this method right now -- the point of using it here is to compare for equal values, not to check if two objects/arrays are referencing the same place in memory.
+
+10. If a certain element of our `currentVDOM` has changed (when our data has updated) and does not match what is on our `prevVDOM`, `findDiff` should update (or _reconcile_) the actual `DOM` element related to that vDOM element.
+
+    - Where have we stored the JavaScript objects we have created with hidden links that allow us to interact with their corresponding nodes on the DOM?
+    - How can you make sure you **set** the correct content on each DOM element based on what's on our new/current vDOM?
+
+Finally, we want to put our new diffing algorithm to good use! In order to implement this, we need to adjust how we update the DOM in order to avoid a full repaint of our view every time.
+
+11. In `updateDOM` (which will be invoked every time we update our data, via our "state hook"), a couple of things need to happen:
+    - If `elems` (where we store our JS objects that correspond/link to the DOM elements we create) is undefined, we need to create those elements with our vDOM, and then attach them to the DOM.
+    - If we already have `elems` on the DOM, we want to reassign `prevVDOM` to be a new array, and then _spread_ (hint hint) all of the elements of our existing vDOM into it. Then, we want to update our `vDOM` with our current data, and use our **diffing** algorithm to only update the DOM data we need to.
+
+---
+
+Congratulations! Starting with breaking down the most granular under-the-hood operations in our UI Hard Parts journey, we have built up to understanding a groundbreaking approach to UI:
+
+- Displayed **data/content** that our users can **interact with** (our two goals!).
+- Created **single source of truth** for our data (with one-way data binding).
+- Implemented "semi-visual" code with our **virtual/visual DOM** that allows us to flexibly compose our UI.
+- Harnessed techniques for **efficiency** like **state hooks**, **diffing**, and **reconciliation**.
