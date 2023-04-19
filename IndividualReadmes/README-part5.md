@@ -1,22 +1,25 @@
 ## Part 5: Hooks & Diffing
 
-Now that we've learned to build a declarative UI using semi-visual coding and we've also created 'element-flexible' code to 'compose' our logic, let's augment our vDOM elements to include additional functionality.
+Now we've learned to use a "Virtual" DOM for semi-visual coding and we've also created 'element-flexible' code to 'compose' our DOM elements. However, completely rebuilding the entire DOM from scratch every 15 milliseconds makes for terrible performance - as is, our lovely vDOM is quite unusable. We need to add efficiency.
 
 1. In `index.html`, edit the `script` tag to use `part5.js` as the `src` file.
 
-We love the virtual DOM for semi-visual coding, but it's not very efficient as is. We need some improvements. It's great that we are able to update `myName` -- but how can we make this code better?
+2. First, let's get rid of the `setInterval` to avoid repeated function calls to `updateDOM`.
+   - We still need to invoke it once at the bottom of our file to make sure we create our vDOM and populate the DOM with elements on our initial load.
 
-We can run on data change, but now our vDOM isn't "real" -- it's only rendered as though we've run the `updateDOM` function upon every data change, which is unlikely.
+We _could_ call `updateDOM` on every data change (like we did previously inside our event handlers) - but that only works if we _actually_ remember to invoke it everywhere we'd need to, which is unlikely - so then our vDOM isn't "real" or guaranteed to accurately reflect our data.
 
-So, let's introduce a "state hook". Instead of directly updating `myName`, we can create a function to do so by implementing some logic and calling our `updateDOM`.
+What if, instead of directly updating our data, we run a function to do so?
 
-3. First, let's get rid of the `setInterval` function to avoid repeated calls to our function.
+3. Initialize a function `'updateName'` which takes in a `value`. This function should reassign `myName` to be the passed-in value.
 
-4. Initialize a function `updateName` which takes in `value`.
+--- \*\*edits to do below this line
 
-5. Reassign `myName` to this passed-in `value`. Don't forget to also invoke `updateDOM`.
+4. `updateName` should _also_ invoke `updateDOM`.
 
-Perhaps we can lock down `myName` so that we it cannot be accessed directly. Better yet, perhaps we can refactor our function so that it works for any piece of data in our app - then we can just "hook" into it.
+Perhaps we can lock down `myName` so that it cannot be accessed directly. Better yet, we can refactor our function so that it works for any piece of data in our app - then we can just "hook" into it.
+
+now we have a "State hook"
 
 6. We can start by wrapping `myName = ''` in brackets to place it inside of an object. Then, rename the property `myName` to `name` to make it more applicable to anything.
 
@@ -34,22 +37,22 @@ Perhaps we can lock down `myName` so that we it cannot be accessed directly. Bet
 
 ---
 
-***Extension Challenge: requestAnimationFrame()*** <br/>
-*Implement [`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) rather than `updateDom` directly on data change - so that it never prioritizes over animations (CSS etc).*
+**_Extension Challenge: requestAnimationFrame()_** <br/>
+_Implement [`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) rather than `updateDom` directly on data change - so that it never prioritizes over animations (CSS etc)._
 
 ---
 
-How can we refactor our code make it more efficient but still allow for automatic updates upon changes made to the data? We can write an 'algorithm', or a series of smart instructures, to check what elements actually **differ** - and only change the DOM elements that need to be updated.
+How can we refactor our code make it more efficient but still allow for automatic updates upon changes made to the data? We can write an 'algorithm', or a series of smart instructions, to check what elements actually **differ** - and only change the DOM elements that need to be updated.
 
-So, let's write a diffing algorithm! You're provided with the first half of this function `findDiff`. As you can see, it takes in two parameters - `prevDOM` and `currentVDOM`. Inside of our `findDiff` function, we're looping through the `currentVDOM` array. Then, we are using `JSON.stringify` to convert values to JSON strings. Feel free to read the [docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) but don't worry too much about this method right now -- the point of using it here is to compare for equal values -- not to check if two objects/arrays are pointing to the same object in memory.
+So, let's write a diffing algorithm! You're provided with the first half of this function `findDiff`. As you can see, it takes in two parameters - `prevVDOM` and `currentVDOM`. Inside of our `findDiff` function, we're looping through the `currentVDOM` array. Then, we are using `JSON.stringify` to convert values to JSON strings. Feel free to read the [docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) but don't worry too much about this method right now -- the point of using it here is to compare for equal values -- not to check if two objects/arrays are pointing to the same object in memory.
 
 14. Inside of the conditional statement, we want to change the DOM element related to the respective vDOM elements. We can do this by grabbing the `elems` (which we have updated in the `document.body` inside of our call to the `replaceChildren` method `updateDOM`) at the current index (`i`) and updating the `textContent` and `value` fields of these elements with the `currentVDOM` at the current index(`i`). What happens when you `console.log(currentVDOM[i])? Is there a specific value you need to grab?
 
-15. Let's also implement some logic for differentiating between the `prevVDOM` and `vDOM`. Declare a variable prevDom at the top of the file.
+15. Let's also implement some logic for differentiating between the `prevVDOM` and `vDOM`. Declare a variable `'prevVDOM'` at the top of the file.
 
-16. Inside of your `updateDOM` function, assign the value of `prevVDOM` to an array with the `vDOM` elements _spread_ into the array. Then, check to see if `elems` is _strictly equal to_ `undefined`. If it is, move your `elems = vDOM.map(convert) line inside of the conditional. Otherwise (else), we can invoke our `findDiff`function with`prevVDOM`and`vDOM` passed in.
+16. Inside of your `updateDOM` function, assign the value of `prevVDOM` to a new array with the `vDOM` elements _spread_ into the array. Then, check to see if `elems` is _strictly equal to_ `undefined`. If it is, move your `elems = vDOM.map(convert) line inside of the conditional. Otherwise (else), we can invoke our `findDiff`function with`prevVDOM`and`vDOM` passed in.
 
-17. Finally, let's call our `updateDOM` function with `setInterval` again. (Include explanation as to why we do this).
+17. Finally, DON'T USE SETINTERVAL ANYMORE we are using hooks still
 
 ---
 
