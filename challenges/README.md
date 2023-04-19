@@ -278,7 +278,7 @@ _Implement [`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/
 
 ---
 
-With our new `updateData` **hook**, we have eliminated unnecessary repeated calls to `updateDOM` and make sure we are only updating the DOM if our data has changed. However, we are still recreating the entire DOM from scratch every time - even when some of our elements will be redered exactly the same.
+With our new `updateData` **hook**, we have eliminated unnecessary repeated calls to `updateDOM` and make sure we are only updating the DOM if our data has changed. However, we are still recreating the entire DOM from scratch every time - even when some of our elements will be rendered exactly the same.
 
 To solve this problem, we can write an 'algorithm' (a series of "smart instructions"), to check what elements actually **differ** on our updated DOM as compared the the previous DOM - and only change the DOM elements that need to be updated.
 
@@ -302,9 +302,9 @@ Finally, we want to put our new diffing algorithm to good use! In order to imple
 
 ---
 
-Congratulations! Starting with breaking down the most granualar under the hood operations in our UI Hard Parts Journey, we have built up to understanding a groundbreaking approach to UI:
+Congratulations! Starting with breaking down the most granular under-the-hood operations in our UI Hard Parts journey, we have built up to understanding a groundbreaking approach to UI:
 
-- Displayed **data/content** that our users can **interact with to change** (our two goals!).
-- A **single source of truth** for our data (with one-way data binding).
-- "Semi-visual" code with our **virtual/visual DOM** that allows us to flexibly compose our UI.
-- Techniques for **efficiency** like **state hooks**, **diffing**, and **reconciliation**.
+- Displayed **data/content** that our users can **interact with** (our two goals!).
+- Created **single source of truth** for our data (with one-way data binding).
+- Implemented "semi-visual" code with our **virtual/visual DOM** that allows us to flexibly compose our UI.
+- Harnessed techniques for **efficiency** like **state hooks**, **diffing**, and **reconciliation**.
