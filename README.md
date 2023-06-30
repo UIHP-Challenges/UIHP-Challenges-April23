@@ -2,7 +2,7 @@
 
 ## Summary
 
-The purpose of these challenges is to learn an under-the-hood understanding of building user interfaces in the web browser. Each challenge will go hand-in-hand with a section of UI Hard Parts.
+The purpose of these challenges is to gain an under-the-hood understanding of building user interfaces in the web browser. Each challenge will go hand-in-hand with a section of [The Hard Parts of UI Development Course](https://frontendmasters.com/courses/hard-parts-ui-dev/) by Will Sentance from [Frontend Masters](https://frontendmasters.com/).
 
 Throughout these challenges, we will cover topics including HTML, JavaScript, & the DOM API in the web browser; one-way data binding and "state-driven" views; the virtual DOM and "composable" UI; and performance optimizations.
 
