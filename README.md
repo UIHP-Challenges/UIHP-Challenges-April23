@@ -166,7 +166,8 @@ Next, let's create our `virtual DOM` - blocks of code (or a _list_) representing
   function handle() {
     myName = jsInput.value;
   },
-][('div', `Hello, ${myName}!`)];
+],
+['div', `Hello, ${myName}!`];
 ```
 
 - Notice that in each sub-array, index `[0]` is the type of DOM element we want to create, index `[1]` has details of what we want that element to contain or display, and index `[2]` is an event handler callback function.
@@ -174,7 +175,7 @@ Next, let's create our `virtual DOM` - blocks of code (or a _list_) representing
 6. Edit the `convert` function to make sure it will properly convert each sub-array in our `vDOM` into a DOM element, accounting for the different properties on different element types, as well as setting any event handlers.
 
 7. Declare a function `'updateDOM'`. This function will:
-   - Update our `vDOM` variable to be the returned result of invoking `createDOM()`.
+   - Update our `vDOM` variable to be the returned result of invoking `createVDOM()`.
    - Use the `convert` function with our new `vDOM` details to update `jsInput` and `jsDiv` with a new DOM element (linked through a JS object).
    - Replace any children on the body of the DOM with our new elements.
    - Re-set the `focus` to be on the input if it has been clicked on (feel free to copy this code from the `component` function where it was given to you).
