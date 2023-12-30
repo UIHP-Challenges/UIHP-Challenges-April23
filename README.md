@@ -56,7 +56,7 @@ If you're unfamiliar with DOM manipulation, take a look at the [docs](https://de
 We should now have a full User Interface (UI) which addresses our two main goals:
 
 - Display content (data inside computer/from internet) as the 'view' for users to see, and
-- Enable the user to interact (tap, click, etc) with the 'view' they see and change it (by changing the udnerlying data & updating the view).
+- Enable the user to interact (tap, click, etc) with the 'view' they see and change it (by changing the underlying data & updating the view).
 
 ---
 
