@@ -56,7 +56,7 @@ If you're unfamiliar with DOM manipulation, take a look at the [docs](https://de
 We should now have a full User Interface (UI) which addresses our two main goals:
 
 - Display content (data inside computer/from internet) as the 'view' for users to see, and
-- Enable the user to interact (tap, click, etc) with the 'view' they see and change it (by changing the udnerlying data & updating the view).
+- Enable the user to interact (tap, click, etc) with the 'view' they see and change it (by changing the underlying data & updating the view).
 
 ---
 
@@ -98,7 +98,7 @@ _Add a submit button that will create and save a new post. How can you implement
 
 In our first two UI Hard Parts challenges, we displayed content and let our users interact with it to change the underlying data, and implemented one-way data binding to ensure our view is always dependent on and consistent with that data.
 
-In `part3.js`, we are describing key parts of the UI in `dataToView`: the contents (data) and how to display it. What if we described the elements as well? This would make our funnction a complete description of the data _and_ view.
+In `part3.js`, we are describing key parts of the UI in `dataToView`: the contents (data) and how to display it. What if we described the elements as well? This would make our function a complete description of the data _and_ view.
 
 1. In `index.html`, edit the `script` tag to use `part3.js` as the `src` file. Then comment out or delete the `input` and `div` elements.
 
@@ -280,7 +280,7 @@ _Implement [`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/
 
 With our new `updateData` **hook**, we have eliminated unnecessary repeated calls to `updateDOM` and make sure we are only updating the DOM if our data has changed. However, we are still recreating the entire DOM from scratch every time - even when some of our elements will be rendered exactly the same.
 
-To solve this problem, we can write an 'algorithm' (a series of "smart instructions"), to check what elements actually **differ** on our updated DOM as compared the the previous DOM - and only change the DOM elements that need to be updated.
+To solve this problem, we can write an 'algorithm' (a series of "smart instructions"), to check what elements actually **differ** on our updated DOM as compared the previous DOM - and only change the DOM elements that need to be updated.
 
 So, let's write a diffing algorithm!
 
